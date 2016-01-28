@@ -149,8 +149,7 @@ package mesosproto
 import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
 import math "math"
-
-// discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto"
+import _ "github.com/gogo/protobuf/gogoproto"
 
 import bytes "bytes"
 
@@ -264,6 +263,15 @@ func (m *AuthenticationErrorMessage) GetError() string {
 	return ""
 }
 
+func init() {
+	proto.RegisterType((*AuthenticateMessage)(nil), "mesosproto.AuthenticateMessage")
+	proto.RegisterType((*AuthenticationMechanismsMessage)(nil), "mesosproto.AuthenticationMechanismsMessage")
+	proto.RegisterType((*AuthenticationStartMessage)(nil), "mesosproto.AuthenticationStartMessage")
+	proto.RegisterType((*AuthenticationStepMessage)(nil), "mesosproto.AuthenticationStepMessage")
+	proto.RegisterType((*AuthenticationCompletedMessage)(nil), "mesosproto.AuthenticationCompletedMessage")
+	proto.RegisterType((*AuthenticationFailedMessage)(nil), "mesosproto.AuthenticationFailedMessage")
+	proto.RegisterType((*AuthenticationErrorMessage)(nil), "mesosproto.AuthenticationErrorMessage")
+}
 func (this *AuthenticateMessage) VerboseEqual(that interface{}) error {
 	if that == nil {
 		if this == nil {
@@ -274,7 +282,12 @@ func (this *AuthenticateMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*AuthenticateMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *AuthenticateMessage")
+		that2, ok := that.(AuthenticateMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *AuthenticateMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -282,7 +295,7 @@ func (this *AuthenticateMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *AuthenticateMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *AuthenticateMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *AuthenticateMessage but is not nil && this == nil")
 	}
 	if this.Pid != nil && that1.Pid != nil {
 		if *this.Pid != *that1.Pid {
@@ -308,7 +321,12 @@ func (this *AuthenticateMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*AuthenticateMessage)
 	if !ok {
-		return false
+		that2, ok := that.(AuthenticateMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -342,7 +360,12 @@ func (this *AuthenticationMechanismsMessage) VerboseEqual(that interface{}) erro
 
 	that1, ok := that.(*AuthenticationMechanismsMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *AuthenticationMechanismsMessage")
+		that2, ok := that.(AuthenticationMechanismsMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *AuthenticationMechanismsMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -350,7 +373,7 @@ func (this *AuthenticationMechanismsMessage) VerboseEqual(that interface{}) erro
 		}
 		return fmt.Errorf("that is type *AuthenticationMechanismsMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *AuthenticationMechanismsMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *AuthenticationMechanismsMessage but is not nil && this == nil")
 	}
 	if len(this.Mechanisms) != len(that1.Mechanisms) {
 		return fmt.Errorf("Mechanisms this(%v) Not Equal that(%v)", len(this.Mechanisms), len(that1.Mechanisms))
@@ -375,7 +398,12 @@ func (this *AuthenticationMechanismsMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*AuthenticationMechanismsMessage)
 	if !ok {
-		return false
+		that2, ok := that.(AuthenticationMechanismsMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -408,7 +436,12 @@ func (this *AuthenticationStartMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*AuthenticationStartMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *AuthenticationStartMessage")
+		that2, ok := that.(AuthenticationStartMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *AuthenticationStartMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -416,7 +449,7 @@ func (this *AuthenticationStartMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *AuthenticationStartMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *AuthenticationStartMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *AuthenticationStartMessage but is not nil && this == nil")
 	}
 	if this.Mechanism != nil && that1.Mechanism != nil {
 		if *this.Mechanism != *that1.Mechanism {
@@ -445,7 +478,12 @@ func (this *AuthenticationStartMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*AuthenticationStartMessage)
 	if !ok {
-		return false
+		that2, ok := that.(AuthenticationStartMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -482,7 +520,12 @@ func (this *AuthenticationStepMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*AuthenticationStepMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *AuthenticationStepMessage")
+		that2, ok := that.(AuthenticationStepMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *AuthenticationStepMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -490,7 +533,7 @@ func (this *AuthenticationStepMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *AuthenticationStepMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *AuthenticationStepMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *AuthenticationStepMessage but is not nil && this == nil")
 	}
 	if !bytes.Equal(this.Data, that1.Data) {
 		return fmt.Errorf("Data this(%v) Not Equal that(%v)", this.Data, that1.Data)
@@ -510,7 +553,12 @@ func (this *AuthenticationStepMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*AuthenticationStepMessage)
 	if !ok {
-		return false
+		that2, ok := that.(AuthenticationStepMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -538,7 +586,12 @@ func (this *AuthenticationCompletedMessage) VerboseEqual(that interface{}) error
 
 	that1, ok := that.(*AuthenticationCompletedMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *AuthenticationCompletedMessage")
+		that2, ok := that.(AuthenticationCompletedMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *AuthenticationCompletedMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -546,7 +599,7 @@ func (this *AuthenticationCompletedMessage) VerboseEqual(that interface{}) error
 		}
 		return fmt.Errorf("that is type *AuthenticationCompletedMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *AuthenticationCompletedMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *AuthenticationCompletedMessage but is not nil && this == nil")
 	}
 	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
@@ -563,7 +616,12 @@ func (this *AuthenticationCompletedMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*AuthenticationCompletedMessage)
 	if !ok {
-		return false
+		that2, ok := that.(AuthenticationCompletedMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -588,7 +646,12 @@ func (this *AuthenticationFailedMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*AuthenticationFailedMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *AuthenticationFailedMessage")
+		that2, ok := that.(AuthenticationFailedMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *AuthenticationFailedMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -596,7 +659,7 @@ func (this *AuthenticationFailedMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *AuthenticationFailedMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *AuthenticationFailedMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *AuthenticationFailedMessage but is not nil && this == nil")
 	}
 	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
@@ -613,7 +676,12 @@ func (this *AuthenticationFailedMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*AuthenticationFailedMessage)
 	if !ok {
-		return false
+		that2, ok := that.(AuthenticationFailedMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -638,7 +706,12 @@ func (this *AuthenticationErrorMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*AuthenticationErrorMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *AuthenticationErrorMessage")
+		that2, ok := that.(AuthenticationErrorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *AuthenticationErrorMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -646,7 +719,7 @@ func (this *AuthenticationErrorMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *AuthenticationErrorMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *AuthenticationErrorMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *AuthenticationErrorMessage but is not nil && this == nil")
 	}
 	if this.Error != nil && that1.Error != nil {
 		if *this.Error != *that1.Error {
@@ -672,7 +745,12 @@ func (this *AuthenticationErrorMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*AuthenticationErrorMessage)
 	if !ok {
-		return false
+		that2, ok := that.(AuthenticationErrorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1394,8 +1472,12 @@ func (m *AuthenticateMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAuthentication
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1408,6 +1490,12 @@ func (m *AuthenticateMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AuthenticateMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AuthenticateMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -1415,6 +1503,9 @@ func (m *AuthenticateMessage) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthentication
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1438,15 +1529,7 @@ func (m *AuthenticateMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipAuthentication(data[iNdEx:])
 			if err != nil {
 				return err
@@ -1465,14 +1548,21 @@ func (m *AuthenticateMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("pid")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *AuthenticationMechanismsMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAuthentication
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1485,6 +1575,12 @@ func (m *AuthenticationMechanismsMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AuthenticationMechanismsMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AuthenticationMechanismsMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -1492,6 +1588,9 @@ func (m *AuthenticationMechanismsMessage) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthentication
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1513,15 +1612,7 @@ func (m *AuthenticationMechanismsMessage) Unmarshal(data []byte) error {
 			m.Mechanisms = append(m.Mechanisms, string(data[iNdEx:postIndex]))
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipAuthentication(data[iNdEx:])
 			if err != nil {
 				return err
@@ -1537,6 +1628,9 @@ func (m *AuthenticationMechanismsMessage) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *AuthenticationStartMessage) Unmarshal(data []byte) error {
@@ -1544,8 +1638,12 @@ func (m *AuthenticationStartMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAuthentication
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1558,6 +1656,12 @@ func (m *AuthenticationStartMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AuthenticationStartMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AuthenticationStartMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -1565,6 +1669,9 @@ func (m *AuthenticationStartMessage) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthentication
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1593,6 +1700,9 @@ func (m *AuthenticationStartMessage) Unmarshal(data []byte) error {
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthentication
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1610,18 +1720,13 @@ func (m *AuthenticationStartMessage) Unmarshal(data []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Data = append([]byte{}, data[iNdEx:postIndex]...)
+			m.Data = append(m.Data[:0], data[iNdEx:postIndex]...)
+			if m.Data == nil {
+				m.Data = []byte{}
+			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipAuthentication(data[iNdEx:])
 			if err != nil {
 				return err
@@ -1640,6 +1745,9 @@ func (m *AuthenticationStartMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("mechanism")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *AuthenticationStepMessage) Unmarshal(data []byte) error {
@@ -1647,8 +1755,12 @@ func (m *AuthenticationStepMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAuthentication
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1661,6 +1773,12 @@ func (m *AuthenticationStepMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AuthenticationStepMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AuthenticationStepMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -1668,6 +1786,9 @@ func (m *AuthenticationStepMessage) Unmarshal(data []byte) error {
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthentication
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1685,19 +1806,14 @@ func (m *AuthenticationStepMessage) Unmarshal(data []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Data = append([]byte{}, data[iNdEx:postIndex]...)
+			m.Data = append(m.Data[:0], data[iNdEx:postIndex]...)
+			if m.Data == nil {
+				m.Data = []byte{}
+			}
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipAuthentication(data[iNdEx:])
 			if err != nil {
 				return err
@@ -1716,104 +1832,21 @@ func (m *AuthenticationStepMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("data")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *AuthenticationCompletedMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
+			if shift >= 64 {
+				return ErrIntOverflowAuthentication
 			}
-			b := data[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		switch fieldNum {
-		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
-			skippy, err := skipAuthentication(data[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthAuthentication
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, data[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	return nil
-}
-func (m *AuthenticationFailedMessage) Unmarshal(data []byte) error {
-	l := len(data)
-	iNdEx := 0
-	for iNdEx < l {
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := data[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		switch fieldNum {
-		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
-			skippy, err := skipAuthentication(data[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthAuthentication
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, data[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	return nil
-}
-func (m *AuthenticationErrorMessage) Unmarshal(data []byte) error {
-	l := len(data)
-	iNdEx := 0
-	for iNdEx < l {
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1826,6 +1859,114 @@ func (m *AuthenticationErrorMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AuthenticationCompletedMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AuthenticationCompletedMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAuthentication(data[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthAuthentication
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, data[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *AuthenticationFailedMessage) Unmarshal(data []byte) error {
+	l := len(data)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAuthentication
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := data[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AuthenticationFailedMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AuthenticationFailedMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAuthentication(data[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthAuthentication
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, data[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *AuthenticationErrorMessage) Unmarshal(data []byte) error {
+	l := len(data)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAuthentication
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := data[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AuthenticationErrorMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AuthenticationErrorMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -1833,6 +1974,9 @@ func (m *AuthenticationErrorMessage) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthentication
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1855,15 +1999,7 @@ func (m *AuthenticationErrorMessage) Unmarshal(data []byte) error {
 			m.Error = &s
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipAuthentication(data[iNdEx:])
 			if err != nil {
 				return err
@@ -1879,6 +2015,9 @@ func (m *AuthenticationErrorMessage) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func skipAuthentication(data []byte) (n int, err error) {
@@ -1887,6 +2026,9 @@ func skipAuthentication(data []byte) (n int, err error) {
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return 0, ErrIntOverflowAuthentication
+			}
 			if iNdEx >= l {
 				return 0, io.ErrUnexpectedEOF
 			}
@@ -1900,7 +2042,10 @@ func skipAuthentication(data []byte) (n int, err error) {
 		wireType := int(wire & 0x7)
 		switch wireType {
 		case 0:
-			for {
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowAuthentication
+				}
 				if iNdEx >= l {
 					return 0, io.ErrUnexpectedEOF
 				}
@@ -1916,6 +2061,9 @@ func skipAuthentication(data []byte) (n int, err error) {
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowAuthentication
+				}
 				if iNdEx >= l {
 					return 0, io.ErrUnexpectedEOF
 				}
@@ -1936,6 +2084,9 @@ func skipAuthentication(data []byte) (n int, err error) {
 				var innerWire uint64
 				var start int = iNdEx
 				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return 0, ErrIntOverflowAuthentication
+					}
 					if iNdEx >= l {
 						return 0, io.ErrUnexpectedEOF
 					}
@@ -1971,4 +2122,5 @@ func skipAuthentication(data []byte) (n int, err error) {
 
 var (
 	ErrInvalidLengthAuthentication = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowAuthentication   = fmt.Errorf("proto: integer overflow")
 )

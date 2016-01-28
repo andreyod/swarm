@@ -7,8 +7,7 @@ package mesosproto
 import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
 import math "math"
-
-// discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto"
+import _ "github.com/gogo/protobuf/gogoproto"
 
 import bytes "bytes"
 
@@ -236,6 +235,15 @@ func (m *Containers) GetContainers() []*ContainerID {
 	return nil
 }
 
+func init() {
+	proto.RegisterType((*Launch)(nil), "mesosproto.Launch")
+	proto.RegisterType((*Update)(nil), "mesosproto.Update")
+	proto.RegisterType((*Wait)(nil), "mesosproto.Wait")
+	proto.RegisterType((*Destroy)(nil), "mesosproto.Destroy")
+	proto.RegisterType((*Usage)(nil), "mesosproto.Usage")
+	proto.RegisterType((*Termination)(nil), "mesosproto.Termination")
+	proto.RegisterType((*Containers)(nil), "mesosproto.Containers")
+}
 func (this *Launch) VerboseEqual(that interface{}) error {
 	if that == nil {
 		if this == nil {
@@ -246,7 +254,12 @@ func (this *Launch) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*Launch)
 	if !ok {
-		return fmt.Errorf("that is not of type *Launch")
+		that2, ok := that.(Launch)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *Launch")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -254,7 +267,7 @@ func (this *Launch) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *Launch but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *Launchbut is not nil && this == nil")
+		return fmt.Errorf("that is type *Launch but is not nil && this == nil")
 	}
 	if !this.ContainerId.Equal(that1.ContainerId) {
 		return fmt.Errorf("ContainerId this(%v) Not Equal that(%v)", this.ContainerId, that1.ContainerId)
@@ -319,7 +332,12 @@ func (this *Launch) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Launch)
 	if !ok {
-		return false
+		that2, ok := that.(Launch)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -392,7 +410,12 @@ func (this *Update) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*Update)
 	if !ok {
-		return fmt.Errorf("that is not of type *Update")
+		that2, ok := that.(Update)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *Update")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -400,7 +423,7 @@ func (this *Update) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *Update but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *Updatebut is not nil && this == nil")
+		return fmt.Errorf("that is type *Update but is not nil && this == nil")
 	}
 	if !this.ContainerId.Equal(that1.ContainerId) {
 		return fmt.Errorf("ContainerId this(%v) Not Equal that(%v)", this.ContainerId, that1.ContainerId)
@@ -428,7 +451,12 @@ func (this *Update) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Update)
 	if !ok {
-		return false
+		that2, ok := that.(Update)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -464,7 +492,12 @@ func (this *Wait) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*Wait)
 	if !ok {
-		return fmt.Errorf("that is not of type *Wait")
+		that2, ok := that.(Wait)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *Wait")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -472,7 +505,7 @@ func (this *Wait) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *Wait but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *Waitbut is not nil && this == nil")
+		return fmt.Errorf("that is type *Wait but is not nil && this == nil")
 	}
 	if !this.ContainerId.Equal(that1.ContainerId) {
 		return fmt.Errorf("ContainerId this(%v) Not Equal that(%v)", this.ContainerId, that1.ContainerId)
@@ -492,7 +525,12 @@ func (this *Wait) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Wait)
 	if !ok {
-		return false
+		that2, ok := that.(Wait)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -520,7 +558,12 @@ func (this *Destroy) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*Destroy)
 	if !ok {
-		return fmt.Errorf("that is not of type *Destroy")
+		that2, ok := that.(Destroy)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *Destroy")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -528,7 +571,7 @@ func (this *Destroy) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *Destroy but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *Destroybut is not nil && this == nil")
+		return fmt.Errorf("that is type *Destroy but is not nil && this == nil")
 	}
 	if !this.ContainerId.Equal(that1.ContainerId) {
 		return fmt.Errorf("ContainerId this(%v) Not Equal that(%v)", this.ContainerId, that1.ContainerId)
@@ -548,7 +591,12 @@ func (this *Destroy) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Destroy)
 	if !ok {
-		return false
+		that2, ok := that.(Destroy)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -576,7 +624,12 @@ func (this *Usage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*Usage)
 	if !ok {
-		return fmt.Errorf("that is not of type *Usage")
+		that2, ok := that.(Usage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *Usage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -584,7 +637,7 @@ func (this *Usage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *Usage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *Usagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *Usage but is not nil && this == nil")
 	}
 	if !this.ContainerId.Equal(that1.ContainerId) {
 		return fmt.Errorf("ContainerId this(%v) Not Equal that(%v)", this.ContainerId, that1.ContainerId)
@@ -604,7 +657,12 @@ func (this *Usage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Usage)
 	if !ok {
-		return false
+		that2, ok := that.(Usage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -632,7 +690,12 @@ func (this *Termination) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*Termination)
 	if !ok {
-		return fmt.Errorf("that is not of type *Termination")
+		that2, ok := that.(Termination)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *Termination")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -640,7 +703,7 @@ func (this *Termination) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *Termination but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *Terminationbut is not nil && this == nil")
+		return fmt.Errorf("that is type *Termination but is not nil && this == nil")
 	}
 	if this.Killed != nil && that1.Killed != nil {
 		if *this.Killed != *that1.Killed {
@@ -684,7 +747,12 @@ func (this *Termination) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Termination)
 	if !ok {
-		return false
+		that2, ok := that.(Termination)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -736,7 +804,12 @@ func (this *Containers) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*Containers)
 	if !ok {
-		return fmt.Errorf("that is not of type *Containers")
+		that2, ok := that.(Containers)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *Containers")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -744,7 +817,7 @@ func (this *Containers) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *Containers but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *Containersbut is not nil && this == nil")
+		return fmt.Errorf("that is type *Containers but is not nil && this == nil")
 	}
 	if len(this.Containers) != len(that1.Containers) {
 		return fmt.Errorf("Containers this(%v) Not Equal that(%v)", len(this.Containers), len(that1.Containers))
@@ -769,7 +842,12 @@ func (this *Containers) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Containers)
 	if !ok {
-		return false
+		that2, ok := that.(Containers)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1331,7 +1409,7 @@ func NewPopulatedUpdate(r randyContainerizer, easy bool) *Update {
 	this := &Update{}
 	this.ContainerId = NewPopulatedContainerID(r, easy)
 	if r.Intn(10) != 0 {
-		v5 := r.Intn(10)
+		v5 := r.Intn(5)
 		this.Resources = make([]*Resource, v5)
 		for i := 0; i < v5; i++ {
 			this.Resources[i] = NewPopulatedResource(r, easy)
@@ -1392,7 +1470,7 @@ func NewPopulatedTermination(r randyContainerizer, easy bool) *Termination {
 func NewPopulatedContainers(r randyContainerizer, easy bool) *Containers {
 	this := &Containers{}
 	if r.Intn(10) != 0 {
-		v9 := r.Intn(10)
+		v9 := r.Intn(5)
 		this.Containers = make([]*ContainerID, v9)
 		for i := 0; i < v9; i++ {
 			this.Containers[i] = NewPopulatedContainerID(r, easy)
@@ -1721,8 +1799,12 @@ func (m *Launch) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowContainerizer
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1735,6 +1817,12 @@ func (m *Launch) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Launch: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Launch: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -1742,6 +1830,9 @@ func (m *Launch) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1773,6 +1864,9 @@ func (m *Launch) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1803,6 +1897,9 @@ func (m *Launch) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1833,6 +1930,9 @@ func (m *Launch) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1860,6 +1960,9 @@ func (m *Launch) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1887,6 +1990,9 @@ func (m *Launch) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1917,6 +2023,9 @@ func (m *Launch) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1944,6 +2053,9 @@ func (m *Launch) Unmarshal(data []byte) error {
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1957,15 +2069,7 @@ func (m *Launch) Unmarshal(data []byte) error {
 			b := bool(v != 0)
 			m.Checkpoint = &b
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipContainerizer(data[iNdEx:])
 			if err != nil {
 				return err
@@ -1984,6 +2088,9 @@ func (m *Launch) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("container_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *Update) Unmarshal(data []byte) error {
@@ -1991,8 +2098,12 @@ func (m *Update) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowContainerizer
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2005,6 +2116,12 @@ func (m *Update) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Update: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Update: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -2012,6 +2129,9 @@ func (m *Update) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -2043,6 +2163,9 @@ func (m *Update) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -2066,15 +2189,7 @@ func (m *Update) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipContainerizer(data[iNdEx:])
 			if err != nil {
 				return err
@@ -2093,6 +2208,9 @@ func (m *Update) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("container_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *Wait) Unmarshal(data []byte) error {
@@ -2100,8 +2218,12 @@ func (m *Wait) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowContainerizer
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2114,6 +2236,12 @@ func (m *Wait) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Wait: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Wait: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -2121,6 +2249,9 @@ func (m *Wait) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -2147,15 +2278,7 @@ func (m *Wait) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipContainerizer(data[iNdEx:])
 			if err != nil {
 				return err
@@ -2174,6 +2297,9 @@ func (m *Wait) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("container_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *Destroy) Unmarshal(data []byte) error {
@@ -2181,8 +2307,12 @@ func (m *Destroy) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowContainerizer
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2195,6 +2325,12 @@ func (m *Destroy) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Destroy: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Destroy: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -2202,6 +2338,9 @@ func (m *Destroy) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -2228,15 +2367,7 @@ func (m *Destroy) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipContainerizer(data[iNdEx:])
 			if err != nil {
 				return err
@@ -2255,6 +2386,9 @@ func (m *Destroy) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("container_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *Usage) Unmarshal(data []byte) error {
@@ -2262,8 +2396,12 @@ func (m *Usage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowContainerizer
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2276,6 +2414,12 @@ func (m *Usage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Usage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Usage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -2283,6 +2427,9 @@ func (m *Usage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -2309,15 +2456,7 @@ func (m *Usage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipContainerizer(data[iNdEx:])
 			if err != nil {
 				return err
@@ -2336,6 +2475,9 @@ func (m *Usage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("container_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *Termination) Unmarshal(data []byte) error {
@@ -2343,8 +2485,12 @@ func (m *Termination) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowContainerizer
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2357,6 +2503,12 @@ func (m *Termination) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Termination: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Termination: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
@@ -2364,6 +2516,9 @@ func (m *Termination) Unmarshal(data []byte) error {
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -2383,6 +2538,9 @@ func (m *Termination) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -2411,6 +2569,9 @@ func (m *Termination) Unmarshal(data []byte) error {
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -2423,15 +2584,7 @@ func (m *Termination) Unmarshal(data []byte) error {
 			}
 			m.Status = &v
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipContainerizer(data[iNdEx:])
 			if err != nil {
 				return err
@@ -2453,14 +2606,21 @@ func (m *Termination) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("message")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *Containers) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowContainerizer
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2473,6 +2633,12 @@ func (m *Containers) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Containers: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Containers: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -2480,6 +2646,9 @@ func (m *Containers) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -2503,15 +2672,7 @@ func (m *Containers) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipContainerizer(data[iNdEx:])
 			if err != nil {
 				return err
@@ -2527,6 +2688,9 @@ func (m *Containers) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func skipContainerizer(data []byte) (n int, err error) {
@@ -2535,6 +2699,9 @@ func skipContainerizer(data []byte) (n int, err error) {
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return 0, ErrIntOverflowContainerizer
+			}
 			if iNdEx >= l {
 				return 0, io.ErrUnexpectedEOF
 			}
@@ -2548,7 +2715,10 @@ func skipContainerizer(data []byte) (n int, err error) {
 		wireType := int(wire & 0x7)
 		switch wireType {
 		case 0:
-			for {
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return 0, io.ErrUnexpectedEOF
 				}
@@ -2564,6 +2734,9 @@ func skipContainerizer(data []byte) (n int, err error) {
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowContainerizer
+				}
 				if iNdEx >= l {
 					return 0, io.ErrUnexpectedEOF
 				}
@@ -2584,6 +2757,9 @@ func skipContainerizer(data []byte) (n int, err error) {
 				var innerWire uint64
 				var start int = iNdEx
 				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return 0, ErrIntOverflowContainerizer
+					}
 					if iNdEx >= l {
 						return 0, io.ErrUnexpectedEOF
 					}
@@ -2619,4 +2795,5 @@ func skipContainerizer(data []byte) (n int, err error) {
 
 var (
 	ErrInvalidLengthContainerizer = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowContainerizer   = fmt.Errorf("proto: integer overflow")
 )

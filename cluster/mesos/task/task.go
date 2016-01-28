@@ -82,7 +82,7 @@ func (t *Task) Build(slaveID string, offers map[string]*mesosproto.Offer) {
 		t.Container.Docker.Network = mesosproto.ContainerInfo_DockerInfo_NONE.Enum()
 	case "host":
 		t.Container.Docker.Network = mesosproto.ContainerInfo_DockerInfo_HOST.Enum()
-	case "default", "bridge", "":
+	default:
 		var ports []uint64
 
 		for _, offer := range offers {
@@ -129,10 +129,8 @@ func (t *Task) Build(slaveID string, offers map[string]*mesosproto.Offer) {
 			}
 		}
 		// TODO handle -P here
-		t.Container.Docker.Network = mesosproto.ContainerInfo_DockerInfo_BRIDGE.Enum()
-	default:
-		log.Errorf("Unsupported network mode %q", t.config.HostConfig.NetworkMode)
-		t.Container.Docker.Network = mesosproto.ContainerInfo_DockerInfo_BRIDGE.Enum()
+		t.Container.Docker.Network = mesosproto.ContainerInfo_DockerInfo_USER.Enum()
+		t.Container.Docker.NetworkName = proto.String(t.config.HostConfig.NetworkMode)
 	}
 
 	if cpus := t.config.CpuShares; cpus > 0 {

@@ -7,8 +7,7 @@ package mesosproto
 import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
 import math "math"
-
-// discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto"
+import _ "github.com/gogo/protobuf/gogoproto"
 
 import bytes "bytes"
 
@@ -238,6 +237,12 @@ func (m *ACLs) GetShutdownFrameworks() []*ACL_ShutdownFramework {
 }
 
 func init() {
+	proto.RegisterType((*ACL)(nil), "mesosproto.ACL")
+	proto.RegisterType((*ACL_Entity)(nil), "mesosproto.ACL.Entity")
+	proto.RegisterType((*ACL_RegisterFramework)(nil), "mesosproto.ACL.RegisterFramework")
+	proto.RegisterType((*ACL_RunTask)(nil), "mesosproto.ACL.RunTask")
+	proto.RegisterType((*ACL_ShutdownFramework)(nil), "mesosproto.ACL.ShutdownFramework")
+	proto.RegisterType((*ACLs)(nil), "mesosproto.ACLs")
 	proto.RegisterEnum("mesosproto.ACL_Entity_Type", ACL_Entity_Type_name, ACL_Entity_Type_value)
 }
 func (this *ACL) VerboseEqual(that interface{}) error {
@@ -250,7 +255,12 @@ func (this *ACL) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ACL)
 	if !ok {
-		return fmt.Errorf("that is not of type *ACL")
+		that2, ok := that.(ACL)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ACL")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -258,7 +268,7 @@ func (this *ACL) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ACL but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ACLbut is not nil && this == nil")
+		return fmt.Errorf("that is type *ACL but is not nil && this == nil")
 	}
 	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
@@ -275,7 +285,12 @@ func (this *ACL) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ACL)
 	if !ok {
-		return false
+		that2, ok := that.(ACL)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -300,7 +315,12 @@ func (this *ACL_Entity) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ACL_Entity)
 	if !ok {
-		return fmt.Errorf("that is not of type *ACL_Entity")
+		that2, ok := that.(ACL_Entity)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ACL_Entity")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -308,7 +328,7 @@ func (this *ACL_Entity) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ACL_Entity but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ACL_Entitybut is not nil && this == nil")
+		return fmt.Errorf("that is type *ACL_Entity but is not nil && this == nil")
 	}
 	if this.Type != nil && that1.Type != nil {
 		if *this.Type != *that1.Type {
@@ -342,7 +362,12 @@ func (this *ACL_Entity) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ACL_Entity)
 	if !ok {
-		return false
+		that2, ok := that.(ACL_Entity)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -384,7 +409,12 @@ func (this *ACL_RegisterFramework) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ACL_RegisterFramework)
 	if !ok {
-		return fmt.Errorf("that is not of type *ACL_RegisterFramework")
+		that2, ok := that.(ACL_RegisterFramework)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ACL_RegisterFramework")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -392,7 +422,7 @@ func (this *ACL_RegisterFramework) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ACL_RegisterFramework but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ACL_RegisterFrameworkbut is not nil && this == nil")
+		return fmt.Errorf("that is type *ACL_RegisterFramework but is not nil && this == nil")
 	}
 	if !this.Principals.Equal(that1.Principals) {
 		return fmt.Errorf("Principals this(%v) Not Equal that(%v)", this.Principals, that1.Principals)
@@ -415,7 +445,12 @@ func (this *ACL_RegisterFramework) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ACL_RegisterFramework)
 	if !ok {
-		return false
+		that2, ok := that.(ACL_RegisterFramework)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -446,7 +481,12 @@ func (this *ACL_RunTask) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ACL_RunTask)
 	if !ok {
-		return fmt.Errorf("that is not of type *ACL_RunTask")
+		that2, ok := that.(ACL_RunTask)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ACL_RunTask")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -454,7 +494,7 @@ func (this *ACL_RunTask) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ACL_RunTask but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ACL_RunTaskbut is not nil && this == nil")
+		return fmt.Errorf("that is type *ACL_RunTask but is not nil && this == nil")
 	}
 	if !this.Principals.Equal(that1.Principals) {
 		return fmt.Errorf("Principals this(%v) Not Equal that(%v)", this.Principals, that1.Principals)
@@ -477,7 +517,12 @@ func (this *ACL_RunTask) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ACL_RunTask)
 	if !ok {
-		return false
+		that2, ok := that.(ACL_RunTask)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -508,7 +553,12 @@ func (this *ACL_ShutdownFramework) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ACL_ShutdownFramework)
 	if !ok {
-		return fmt.Errorf("that is not of type *ACL_ShutdownFramework")
+		that2, ok := that.(ACL_ShutdownFramework)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ACL_ShutdownFramework")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -516,7 +566,7 @@ func (this *ACL_ShutdownFramework) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ACL_ShutdownFramework but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ACL_ShutdownFrameworkbut is not nil && this == nil")
+		return fmt.Errorf("that is type *ACL_ShutdownFramework but is not nil && this == nil")
 	}
 	if !this.Principals.Equal(that1.Principals) {
 		return fmt.Errorf("Principals this(%v) Not Equal that(%v)", this.Principals, that1.Principals)
@@ -539,7 +589,12 @@ func (this *ACL_ShutdownFramework) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ACL_ShutdownFramework)
 	if !ok {
-		return false
+		that2, ok := that.(ACL_ShutdownFramework)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -570,7 +625,12 @@ func (this *ACLs) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ACLs)
 	if !ok {
-		return fmt.Errorf("that is not of type *ACLs")
+		that2, ok := that.(ACLs)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ACLs")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -578,7 +638,7 @@ func (this *ACLs) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ACLs but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ACLsbut is not nil && this == nil")
+		return fmt.Errorf("that is type *ACLs but is not nil && this == nil")
 	}
 	if this.Permissive != nil && that1.Permissive != nil {
 		if *this.Permissive != *that1.Permissive {
@@ -628,7 +688,12 @@ func (this *ACLs) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ACLs)
 	if !ok {
-		return false
+		that2, ok := that.(ACLs)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1164,21 +1229,21 @@ func NewPopulatedACLs(r randyAuthorizer, easy bool) *ACLs {
 		this.Permissive = &v3
 	}
 	if r.Intn(10) != 0 {
-		v4 := r.Intn(10)
+		v4 := r.Intn(5)
 		this.RegisterFrameworks = make([]*ACL_RegisterFramework, v4)
 		for i := 0; i < v4; i++ {
 			this.RegisterFrameworks[i] = NewPopulatedACL_RegisterFramework(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v5 := r.Intn(10)
+		v5 := r.Intn(5)
 		this.RunTasks = make([]*ACL_RunTask, v5)
 		for i := 0; i < v5; i++ {
 			this.RunTasks[i] = NewPopulatedACL_RunTask(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v6 := r.Intn(10)
+		v6 := r.Intn(5)
 		this.ShutdownFrameworks = make([]*ACL_ShutdownFramework, v6)
 		for i := 0; i < v6; i++ {
 			this.ShutdownFrameworks[i] = NewPopulatedACL_ShutdownFramework(r, easy)
@@ -1467,8 +1532,12 @@ func (m *ACL) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAuthorizer
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1480,17 +1549,16 @@ func (m *ACL) Unmarshal(data []byte) error {
 			}
 		}
 		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ACL: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ACL: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipAuthorizer(data[iNdEx:])
 			if err != nil {
 				return err
@@ -1506,14 +1574,21 @@ func (m *ACL) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ACL_Entity) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAuthorizer
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1526,6 +1601,12 @@ func (m *ACL_Entity) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Entity: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Entity: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
@@ -1533,6 +1614,9 @@ func (m *ACL_Entity) Unmarshal(data []byte) error {
 			}
 			var v ACL_Entity_Type
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1550,6 +1634,9 @@ func (m *ACL_Entity) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1571,15 +1658,7 @@ func (m *ACL_Entity) Unmarshal(data []byte) error {
 			m.Values = append(m.Values, string(data[iNdEx:postIndex]))
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipAuthorizer(data[iNdEx:])
 			if err != nil {
 				return err
@@ -1595,6 +1674,9 @@ func (m *ACL_Entity) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ACL_RegisterFramework) Unmarshal(data []byte) error {
@@ -1602,8 +1684,12 @@ func (m *ACL_RegisterFramework) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAuthorizer
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1616,6 +1702,12 @@ func (m *ACL_RegisterFramework) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RegisterFramework: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RegisterFramework: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -1623,6 +1715,9 @@ func (m *ACL_RegisterFramework) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1654,6 +1749,9 @@ func (m *ACL_RegisterFramework) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1680,15 +1778,7 @@ func (m *ACL_RegisterFramework) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000002)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipAuthorizer(data[iNdEx:])
 			if err != nil {
 				return err
@@ -1710,6 +1800,9 @@ func (m *ACL_RegisterFramework) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("roles")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ACL_RunTask) Unmarshal(data []byte) error {
@@ -1717,8 +1810,12 @@ func (m *ACL_RunTask) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAuthorizer
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1731,6 +1828,12 @@ func (m *ACL_RunTask) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RunTask: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RunTask: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -1738,6 +1841,9 @@ func (m *ACL_RunTask) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1769,6 +1875,9 @@ func (m *ACL_RunTask) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1795,15 +1904,7 @@ func (m *ACL_RunTask) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000002)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipAuthorizer(data[iNdEx:])
 			if err != nil {
 				return err
@@ -1825,6 +1926,9 @@ func (m *ACL_RunTask) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("users")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ACL_ShutdownFramework) Unmarshal(data []byte) error {
@@ -1832,8 +1936,12 @@ func (m *ACL_ShutdownFramework) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAuthorizer
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1846,6 +1954,12 @@ func (m *ACL_ShutdownFramework) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ShutdownFramework: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ShutdownFramework: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -1853,6 +1967,9 @@ func (m *ACL_ShutdownFramework) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1884,6 +2001,9 @@ func (m *ACL_ShutdownFramework) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1910,15 +2030,7 @@ func (m *ACL_ShutdownFramework) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000002)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipAuthorizer(data[iNdEx:])
 			if err != nil {
 				return err
@@ -1940,14 +2052,21 @@ func (m *ACL_ShutdownFramework) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("framework_principals")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ACLs) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAuthorizer
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1960,6 +2079,12 @@ func (m *ACLs) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ACLs: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ACLs: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
@@ -1967,6 +2092,9 @@ func (m *ACLs) Unmarshal(data []byte) error {
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -1985,6 +2113,9 @@ func (m *ACLs) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -2013,6 +2144,9 @@ func (m *ACLs) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -2041,6 +2175,9 @@ func (m *ACLs) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -2064,15 +2201,7 @@ func (m *ACLs) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipAuthorizer(data[iNdEx:])
 			if err != nil {
 				return err
@@ -2088,6 +2217,9 @@ func (m *ACLs) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func skipAuthorizer(data []byte) (n int, err error) {
@@ -2096,6 +2228,9 @@ func skipAuthorizer(data []byte) (n int, err error) {
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return 0, ErrIntOverflowAuthorizer
+			}
 			if iNdEx >= l {
 				return 0, io.ErrUnexpectedEOF
 			}
@@ -2109,7 +2244,10 @@ func skipAuthorizer(data []byte) (n int, err error) {
 		wireType := int(wire & 0x7)
 		switch wireType {
 		case 0:
-			for {
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return 0, io.ErrUnexpectedEOF
 				}
@@ -2125,6 +2263,9 @@ func skipAuthorizer(data []byte) (n int, err error) {
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowAuthorizer
+				}
 				if iNdEx >= l {
 					return 0, io.ErrUnexpectedEOF
 				}
@@ -2145,6 +2286,9 @@ func skipAuthorizer(data []byte) (n int, err error) {
 				var innerWire uint64
 				var start int = iNdEx
 				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return 0, ErrIntOverflowAuthorizer
+					}
 					if iNdEx >= l {
 						return 0, io.ErrUnexpectedEOF
 					}
@@ -2180,4 +2324,5 @@ func skipAuthorizer(data []byte) (n int, err error) {
 
 var (
 	ErrInvalidLengthAuthorizer = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowAuthorizer   = fmt.Errorf("proto: integer overflow")
 )

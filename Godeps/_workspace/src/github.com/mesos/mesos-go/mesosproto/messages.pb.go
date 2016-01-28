@@ -7,8 +7,7 @@ package mesosproto
 import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
 import math "math"
-
-// discarding unused import gogoproto "github.com/gogo/protobuf/gogoproto"
+import _ "github.com/gogo/protobuf/gogoproto"
 
 import bytes "bytes"
 
@@ -1455,6 +1454,55 @@ func (m *HookExecuted) GetModule() string {
 }
 
 func init() {
+	proto.RegisterType((*Task)(nil), "mesosproto.Task")
+	proto.RegisterType((*StatusUpdate)(nil), "mesosproto.StatusUpdate")
+	proto.RegisterType((*StatusUpdateRecord)(nil), "mesosproto.StatusUpdateRecord")
+	proto.RegisterType((*SubmitSchedulerRequest)(nil), "mesosproto.SubmitSchedulerRequest")
+	proto.RegisterType((*SubmitSchedulerResponse)(nil), "mesosproto.SubmitSchedulerResponse")
+	proto.RegisterType((*ExecutorToFrameworkMessage)(nil), "mesosproto.ExecutorToFrameworkMessage")
+	proto.RegisterType((*FrameworkToExecutorMessage)(nil), "mesosproto.FrameworkToExecutorMessage")
+	proto.RegisterType((*RegisterFrameworkMessage)(nil), "mesosproto.RegisterFrameworkMessage")
+	proto.RegisterType((*ReregisterFrameworkMessage)(nil), "mesosproto.ReregisterFrameworkMessage")
+	proto.RegisterType((*FrameworkRegisteredMessage)(nil), "mesosproto.FrameworkRegisteredMessage")
+	proto.RegisterType((*FrameworkReregisteredMessage)(nil), "mesosproto.FrameworkReregisteredMessage")
+	proto.RegisterType((*UnregisterFrameworkMessage)(nil), "mesosproto.UnregisterFrameworkMessage")
+	proto.RegisterType((*DeactivateFrameworkMessage)(nil), "mesosproto.DeactivateFrameworkMessage")
+	proto.RegisterType((*ResourceRequestMessage)(nil), "mesosproto.ResourceRequestMessage")
+	proto.RegisterType((*ResourceOffersMessage)(nil), "mesosproto.ResourceOffersMessage")
+	proto.RegisterType((*LaunchTasksMessage)(nil), "mesosproto.LaunchTasksMessage")
+	proto.RegisterType((*RescindResourceOfferMessage)(nil), "mesosproto.RescindResourceOfferMessage")
+	proto.RegisterType((*ReviveOffersMessage)(nil), "mesosproto.ReviveOffersMessage")
+	proto.RegisterType((*RunTaskMessage)(nil), "mesosproto.RunTaskMessage")
+	proto.RegisterType((*KillTaskMessage)(nil), "mesosproto.KillTaskMessage")
+	proto.RegisterType((*StatusUpdateMessage)(nil), "mesosproto.StatusUpdateMessage")
+	proto.RegisterType((*StatusUpdateAcknowledgementMessage)(nil), "mesosproto.StatusUpdateAcknowledgementMessage")
+	proto.RegisterType((*LostSlaveMessage)(nil), "mesosproto.LostSlaveMessage")
+	proto.RegisterType((*ReconcileTasksMessage)(nil), "mesosproto.ReconcileTasksMessage")
+	proto.RegisterType((*FrameworkErrorMessage)(nil), "mesosproto.FrameworkErrorMessage")
+	proto.RegisterType((*RegisterSlaveMessage)(nil), "mesosproto.RegisterSlaveMessage")
+	proto.RegisterType((*ReregisterSlaveMessage)(nil), "mesosproto.ReregisterSlaveMessage")
+	proto.RegisterType((*SlaveRegisteredMessage)(nil), "mesosproto.SlaveRegisteredMessage")
+	proto.RegisterType((*SlaveReregisteredMessage)(nil), "mesosproto.SlaveReregisteredMessage")
+	proto.RegisterType((*UnregisterSlaveMessage)(nil), "mesosproto.UnregisterSlaveMessage")
+	proto.RegisterType((*MasterSlaveConnection)(nil), "mesosproto.MasterSlaveConnection")
+	proto.RegisterType((*PingSlaveMessage)(nil), "mesosproto.PingSlaveMessage")
+	proto.RegisterType((*PongSlaveMessage)(nil), "mesosproto.PongSlaveMessage")
+	proto.RegisterType((*ShutdownFrameworkMessage)(nil), "mesosproto.ShutdownFrameworkMessage")
+	proto.RegisterType((*ShutdownExecutorMessage)(nil), "mesosproto.ShutdownExecutorMessage")
+	proto.RegisterType((*UpdateFrameworkMessage)(nil), "mesosproto.UpdateFrameworkMessage")
+	proto.RegisterType((*CheckpointResourcesMessage)(nil), "mesosproto.CheckpointResourcesMessage")
+	proto.RegisterType((*UpdateSlaveMessage)(nil), "mesosproto.UpdateSlaveMessage")
+	proto.RegisterType((*RegisterExecutorMessage)(nil), "mesosproto.RegisterExecutorMessage")
+	proto.RegisterType((*ExecutorRegisteredMessage)(nil), "mesosproto.ExecutorRegisteredMessage")
+	proto.RegisterType((*ExecutorReregisteredMessage)(nil), "mesosproto.ExecutorReregisteredMessage")
+	proto.RegisterType((*ExitedExecutorMessage)(nil), "mesosproto.ExitedExecutorMessage")
+	proto.RegisterType((*ReconnectExecutorMessage)(nil), "mesosproto.ReconnectExecutorMessage")
+	proto.RegisterType((*ReregisterExecutorMessage)(nil), "mesosproto.ReregisterExecutorMessage")
+	proto.RegisterType((*ShutdownMessage)(nil), "mesosproto.ShutdownMessage")
+	proto.RegisterType((*Archive)(nil), "mesosproto.Archive")
+	proto.RegisterType((*Archive_Framework)(nil), "mesosproto.Archive.Framework")
+	proto.RegisterType((*TaskHealthStatus)(nil), "mesosproto.TaskHealthStatus")
+	proto.RegisterType((*HookExecuted)(nil), "mesosproto.HookExecuted")
 	proto.RegisterEnum("mesosproto.StatusUpdateRecord_Type", StatusUpdateRecord_Type_name, StatusUpdateRecord_Type_value)
 }
 func (this *Task) VerboseEqual(that interface{}) error {
@@ -1467,7 +1515,12 @@ func (this *Task) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*Task)
 	if !ok {
-		return fmt.Errorf("that is not of type *Task")
+		that2, ok := that.(Task)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *Task")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1475,7 +1528,7 @@ func (this *Task) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *Task but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *Taskbut is not nil && this == nil")
+		return fmt.Errorf("that is type *Task but is not nil && this == nil")
 	}
 	if this.Name != nil && that1.Name != nil {
 		if *this.Name != *that1.Name {
@@ -1556,7 +1609,12 @@ func (this *Task) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Task)
 	if !ok {
-		return false
+		that2, ok := that.(Task)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1645,7 +1703,12 @@ func (this *StatusUpdate) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*StatusUpdate)
 	if !ok {
-		return fmt.Errorf("that is not of type *StatusUpdate")
+		that2, ok := that.(StatusUpdate)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *StatusUpdate")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1653,7 +1716,7 @@ func (this *StatusUpdate) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *StatusUpdate but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *StatusUpdatebut is not nil && this == nil")
+		return fmt.Errorf("that is type *StatusUpdate but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -1703,7 +1766,12 @@ func (this *StatusUpdate) Equal(that interface{}) bool {
 
 	that1, ok := that.(*StatusUpdate)
 	if !ok {
-		return false
+		that2, ok := that.(StatusUpdate)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1761,7 +1829,12 @@ func (this *StatusUpdateRecord) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*StatusUpdateRecord)
 	if !ok {
-		return fmt.Errorf("that is not of type *StatusUpdateRecord")
+		that2, ok := that.(StatusUpdateRecord)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *StatusUpdateRecord")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1769,7 +1842,7 @@ func (this *StatusUpdateRecord) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *StatusUpdateRecord but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *StatusUpdateRecordbut is not nil && this == nil")
+		return fmt.Errorf("that is type *StatusUpdateRecord but is not nil && this == nil")
 	}
 	if this.Type != nil && that1.Type != nil {
 		if *this.Type != *that1.Type {
@@ -1801,7 +1874,12 @@ func (this *StatusUpdateRecord) Equal(that interface{}) bool {
 
 	that1, ok := that.(*StatusUpdateRecord)
 	if !ok {
-		return false
+		that2, ok := that.(StatusUpdateRecord)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1841,7 +1919,12 @@ func (this *SubmitSchedulerRequest) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*SubmitSchedulerRequest)
 	if !ok {
-		return fmt.Errorf("that is not of type *SubmitSchedulerRequest")
+		that2, ok := that.(SubmitSchedulerRequest)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SubmitSchedulerRequest")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1849,7 +1932,7 @@ func (this *SubmitSchedulerRequest) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *SubmitSchedulerRequest but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *SubmitSchedulerRequestbut is not nil && this == nil")
+		return fmt.Errorf("that is type *SubmitSchedulerRequest but is not nil && this == nil")
 	}
 	if this.Name != nil && that1.Name != nil {
 		if *this.Name != *that1.Name {
@@ -1875,7 +1958,12 @@ func (this *SubmitSchedulerRequest) Equal(that interface{}) bool {
 
 	that1, ok := that.(*SubmitSchedulerRequest)
 	if !ok {
-		return false
+		that2, ok := that.(SubmitSchedulerRequest)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1909,7 +1997,12 @@ func (this *SubmitSchedulerResponse) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*SubmitSchedulerResponse)
 	if !ok {
-		return fmt.Errorf("that is not of type *SubmitSchedulerResponse")
+		that2, ok := that.(SubmitSchedulerResponse)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SubmitSchedulerResponse")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1917,7 +2010,7 @@ func (this *SubmitSchedulerResponse) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *SubmitSchedulerResponse but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *SubmitSchedulerResponsebut is not nil && this == nil")
+		return fmt.Errorf("that is type *SubmitSchedulerResponse but is not nil && this == nil")
 	}
 	if this.Okay != nil && that1.Okay != nil {
 		if *this.Okay != *that1.Okay {
@@ -1943,7 +2036,12 @@ func (this *SubmitSchedulerResponse) Equal(that interface{}) bool {
 
 	that1, ok := that.(*SubmitSchedulerResponse)
 	if !ok {
-		return false
+		that2, ok := that.(SubmitSchedulerResponse)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1977,7 +2075,12 @@ func (this *ExecutorToFrameworkMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ExecutorToFrameworkMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ExecutorToFrameworkMessage")
+		that2, ok := that.(ExecutorToFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ExecutorToFrameworkMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -1985,7 +2088,7 @@ func (this *ExecutorToFrameworkMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ExecutorToFrameworkMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ExecutorToFrameworkMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ExecutorToFrameworkMessage but is not nil && this == nil")
 	}
 	if !this.SlaveId.Equal(that1.SlaveId) {
 		return fmt.Errorf("SlaveId this(%v) Not Equal that(%v)", this.SlaveId, that1.SlaveId)
@@ -2014,7 +2117,12 @@ func (this *ExecutorToFrameworkMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ExecutorToFrameworkMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ExecutorToFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2051,7 +2159,12 @@ func (this *FrameworkToExecutorMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*FrameworkToExecutorMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *FrameworkToExecutorMessage")
+		that2, ok := that.(FrameworkToExecutorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *FrameworkToExecutorMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2059,7 +2172,7 @@ func (this *FrameworkToExecutorMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *FrameworkToExecutorMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *FrameworkToExecutorMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *FrameworkToExecutorMessage but is not nil && this == nil")
 	}
 	if !this.SlaveId.Equal(that1.SlaveId) {
 		return fmt.Errorf("SlaveId this(%v) Not Equal that(%v)", this.SlaveId, that1.SlaveId)
@@ -2088,7 +2201,12 @@ func (this *FrameworkToExecutorMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*FrameworkToExecutorMessage)
 	if !ok {
-		return false
+		that2, ok := that.(FrameworkToExecutorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2125,7 +2243,12 @@ func (this *RegisterFrameworkMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*RegisterFrameworkMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *RegisterFrameworkMessage")
+		that2, ok := that.(RegisterFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *RegisterFrameworkMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2133,7 +2256,7 @@ func (this *RegisterFrameworkMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *RegisterFrameworkMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *RegisterFrameworkMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *RegisterFrameworkMessage but is not nil && this == nil")
 	}
 	if !this.Framework.Equal(that1.Framework) {
 		return fmt.Errorf("Framework this(%v) Not Equal that(%v)", this.Framework, that1.Framework)
@@ -2153,7 +2276,12 @@ func (this *RegisterFrameworkMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*RegisterFrameworkMessage)
 	if !ok {
-		return false
+		that2, ok := that.(RegisterFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2181,7 +2309,12 @@ func (this *ReregisterFrameworkMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ReregisterFrameworkMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ReregisterFrameworkMessage")
+		that2, ok := that.(ReregisterFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ReregisterFrameworkMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2189,7 +2322,7 @@ func (this *ReregisterFrameworkMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ReregisterFrameworkMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ReregisterFrameworkMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ReregisterFrameworkMessage but is not nil && this == nil")
 	}
 	if !this.Framework.Equal(that1.Framework) {
 		return fmt.Errorf("Framework this(%v) Not Equal that(%v)", this.Framework, that1.Framework)
@@ -2218,7 +2351,12 @@ func (this *ReregisterFrameworkMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ReregisterFrameworkMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ReregisterFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2255,7 +2393,12 @@ func (this *FrameworkRegisteredMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*FrameworkRegisteredMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *FrameworkRegisteredMessage")
+		that2, ok := that.(FrameworkRegisteredMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *FrameworkRegisteredMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2263,7 +2406,7 @@ func (this *FrameworkRegisteredMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *FrameworkRegisteredMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *FrameworkRegisteredMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *FrameworkRegisteredMessage but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -2286,7 +2429,12 @@ func (this *FrameworkRegisteredMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*FrameworkRegisteredMessage)
 	if !ok {
-		return false
+		that2, ok := that.(FrameworkRegisteredMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2317,7 +2465,12 @@ func (this *FrameworkReregisteredMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*FrameworkReregisteredMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *FrameworkReregisteredMessage")
+		that2, ok := that.(FrameworkReregisteredMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *FrameworkReregisteredMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2325,7 +2478,7 @@ func (this *FrameworkReregisteredMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *FrameworkReregisteredMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *FrameworkReregisteredMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *FrameworkReregisteredMessage but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -2348,7 +2501,12 @@ func (this *FrameworkReregisteredMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*FrameworkReregisteredMessage)
 	if !ok {
-		return false
+		that2, ok := that.(FrameworkReregisteredMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2379,7 +2537,12 @@ func (this *UnregisterFrameworkMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*UnregisterFrameworkMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *UnregisterFrameworkMessage")
+		that2, ok := that.(UnregisterFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *UnregisterFrameworkMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2387,7 +2550,7 @@ func (this *UnregisterFrameworkMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *UnregisterFrameworkMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *UnregisterFrameworkMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *UnregisterFrameworkMessage but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -2407,7 +2570,12 @@ func (this *UnregisterFrameworkMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*UnregisterFrameworkMessage)
 	if !ok {
-		return false
+		that2, ok := that.(UnregisterFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2435,7 +2603,12 @@ func (this *DeactivateFrameworkMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*DeactivateFrameworkMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *DeactivateFrameworkMessage")
+		that2, ok := that.(DeactivateFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *DeactivateFrameworkMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2443,7 +2616,7 @@ func (this *DeactivateFrameworkMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *DeactivateFrameworkMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *DeactivateFrameworkMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *DeactivateFrameworkMessage but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -2463,7 +2636,12 @@ func (this *DeactivateFrameworkMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*DeactivateFrameworkMessage)
 	if !ok {
-		return false
+		that2, ok := that.(DeactivateFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2491,7 +2669,12 @@ func (this *ResourceRequestMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ResourceRequestMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ResourceRequestMessage")
+		that2, ok := that.(ResourceRequestMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ResourceRequestMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2499,7 +2682,7 @@ func (this *ResourceRequestMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ResourceRequestMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ResourceRequestMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ResourceRequestMessage but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -2527,7 +2710,12 @@ func (this *ResourceRequestMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ResourceRequestMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ResourceRequestMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2563,7 +2751,12 @@ func (this *ResourceOffersMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ResourceOffersMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ResourceOffersMessage")
+		that2, ok := that.(ResourceOffersMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ResourceOffersMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2571,7 +2764,7 @@ func (this *ResourceOffersMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ResourceOffersMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ResourceOffersMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ResourceOffersMessage but is not nil && this == nil")
 	}
 	if len(this.Offers) != len(that1.Offers) {
 		return fmt.Errorf("Offers this(%v) Not Equal that(%v)", len(this.Offers), len(that1.Offers))
@@ -2604,7 +2797,12 @@ func (this *ResourceOffersMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ResourceOffersMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ResourceOffersMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2645,7 +2843,12 @@ func (this *LaunchTasksMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*LaunchTasksMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *LaunchTasksMessage")
+		that2, ok := that.(LaunchTasksMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *LaunchTasksMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2653,7 +2856,7 @@ func (this *LaunchTasksMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *LaunchTasksMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *LaunchTasksMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *LaunchTasksMessage but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -2692,7 +2895,12 @@ func (this *LaunchTasksMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*LaunchTasksMessage)
 	if !ok {
-		return false
+		that2, ok := that.(LaunchTasksMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2739,7 +2947,12 @@ func (this *RescindResourceOfferMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*RescindResourceOfferMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *RescindResourceOfferMessage")
+		that2, ok := that.(RescindResourceOfferMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *RescindResourceOfferMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2747,7 +2960,7 @@ func (this *RescindResourceOfferMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *RescindResourceOfferMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *RescindResourceOfferMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *RescindResourceOfferMessage but is not nil && this == nil")
 	}
 	if !this.OfferId.Equal(that1.OfferId) {
 		return fmt.Errorf("OfferId this(%v) Not Equal that(%v)", this.OfferId, that1.OfferId)
@@ -2767,7 +2980,12 @@ func (this *RescindResourceOfferMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*RescindResourceOfferMessage)
 	if !ok {
-		return false
+		that2, ok := that.(RescindResourceOfferMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2795,7 +3013,12 @@ func (this *ReviveOffersMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ReviveOffersMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ReviveOffersMessage")
+		that2, ok := that.(ReviveOffersMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ReviveOffersMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2803,7 +3026,7 @@ func (this *ReviveOffersMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ReviveOffersMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ReviveOffersMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ReviveOffersMessage but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -2823,7 +3046,12 @@ func (this *ReviveOffersMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ReviveOffersMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ReviveOffersMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2851,7 +3079,12 @@ func (this *RunTaskMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*RunTaskMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *RunTaskMessage")
+		that2, ok := that.(RunTaskMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *RunTaskMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2859,7 +3092,7 @@ func (this *RunTaskMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *RunTaskMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *RunTaskMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *RunTaskMessage but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -2894,7 +3127,12 @@ func (this *RunTaskMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*RunTaskMessage)
 	if !ok {
-		return false
+		that2, ok := that.(RunTaskMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2937,7 +3175,12 @@ func (this *KillTaskMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*KillTaskMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *KillTaskMessage")
+		that2, ok := that.(KillTaskMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *KillTaskMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2945,7 +3188,7 @@ func (this *KillTaskMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *KillTaskMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *KillTaskMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *KillTaskMessage but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -2968,7 +3211,12 @@ func (this *KillTaskMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*KillTaskMessage)
 	if !ok {
-		return false
+		that2, ok := that.(KillTaskMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -2999,7 +3247,12 @@ func (this *StatusUpdateMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*StatusUpdateMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *StatusUpdateMessage")
+		that2, ok := that.(StatusUpdateMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *StatusUpdateMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3007,7 +3260,7 @@ func (this *StatusUpdateMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *StatusUpdateMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *StatusUpdateMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *StatusUpdateMessage but is not nil && this == nil")
 	}
 	if !this.Update.Equal(that1.Update) {
 		return fmt.Errorf("Update this(%v) Not Equal that(%v)", this.Update, that1.Update)
@@ -3036,7 +3289,12 @@ func (this *StatusUpdateMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*StatusUpdateMessage)
 	if !ok {
-		return false
+		that2, ok := that.(StatusUpdateMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3073,7 +3331,12 @@ func (this *StatusUpdateAcknowledgementMessage) VerboseEqual(that interface{}) e
 
 	that1, ok := that.(*StatusUpdateAcknowledgementMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *StatusUpdateAcknowledgementMessage")
+		that2, ok := that.(StatusUpdateAcknowledgementMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *StatusUpdateAcknowledgementMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3081,7 +3344,7 @@ func (this *StatusUpdateAcknowledgementMessage) VerboseEqual(that interface{}) e
 		}
 		return fmt.Errorf("that is type *StatusUpdateAcknowledgementMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *StatusUpdateAcknowledgementMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *StatusUpdateAcknowledgementMessage but is not nil && this == nil")
 	}
 	if !this.SlaveId.Equal(that1.SlaveId) {
 		return fmt.Errorf("SlaveId this(%v) Not Equal that(%v)", this.SlaveId, that1.SlaveId)
@@ -3110,7 +3373,12 @@ func (this *StatusUpdateAcknowledgementMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*StatusUpdateAcknowledgementMessage)
 	if !ok {
-		return false
+		that2, ok := that.(StatusUpdateAcknowledgementMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3147,7 +3415,12 @@ func (this *LostSlaveMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*LostSlaveMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *LostSlaveMessage")
+		that2, ok := that.(LostSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *LostSlaveMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3155,7 +3428,7 @@ func (this *LostSlaveMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *LostSlaveMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *LostSlaveMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *LostSlaveMessage but is not nil && this == nil")
 	}
 	if !this.SlaveId.Equal(that1.SlaveId) {
 		return fmt.Errorf("SlaveId this(%v) Not Equal that(%v)", this.SlaveId, that1.SlaveId)
@@ -3175,7 +3448,12 @@ func (this *LostSlaveMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*LostSlaveMessage)
 	if !ok {
-		return false
+		that2, ok := that.(LostSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3203,7 +3481,12 @@ func (this *ReconcileTasksMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ReconcileTasksMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ReconcileTasksMessage")
+		that2, ok := that.(ReconcileTasksMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ReconcileTasksMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3211,7 +3494,7 @@ func (this *ReconcileTasksMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ReconcileTasksMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ReconcileTasksMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ReconcileTasksMessage but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -3239,7 +3522,12 @@ func (this *ReconcileTasksMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ReconcileTasksMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ReconcileTasksMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3275,7 +3563,12 @@ func (this *FrameworkErrorMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*FrameworkErrorMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *FrameworkErrorMessage")
+		that2, ok := that.(FrameworkErrorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *FrameworkErrorMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3283,7 +3576,7 @@ func (this *FrameworkErrorMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *FrameworkErrorMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *FrameworkErrorMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *FrameworkErrorMessage but is not nil && this == nil")
 	}
 	if this.Message != nil && that1.Message != nil {
 		if *this.Message != *that1.Message {
@@ -3309,7 +3602,12 @@ func (this *FrameworkErrorMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*FrameworkErrorMessage)
 	if !ok {
-		return false
+		that2, ok := that.(FrameworkErrorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3343,7 +3641,12 @@ func (this *RegisterSlaveMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*RegisterSlaveMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *RegisterSlaveMessage")
+		that2, ok := that.(RegisterSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *RegisterSlaveMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3351,7 +3654,7 @@ func (this *RegisterSlaveMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *RegisterSlaveMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *RegisterSlaveMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *RegisterSlaveMessage but is not nil && this == nil")
 	}
 	if !this.Slave.Equal(that1.Slave) {
 		return fmt.Errorf("Slave this(%v) Not Equal that(%v)", this.Slave, that1.Slave)
@@ -3388,7 +3691,12 @@ func (this *RegisterSlaveMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*RegisterSlaveMessage)
 	if !ok {
-		return false
+		that2, ok := that.(RegisterSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3433,7 +3741,12 @@ func (this *ReregisterSlaveMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ReregisterSlaveMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ReregisterSlaveMessage")
+		that2, ok := that.(ReregisterSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ReregisterSlaveMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3441,7 +3754,7 @@ func (this *ReregisterSlaveMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ReregisterSlaveMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ReregisterSlaveMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ReregisterSlaveMessage but is not nil && this == nil")
 	}
 	if !this.Slave.Equal(that1.Slave) {
 		return fmt.Errorf("Slave this(%v) Not Equal that(%v)", this.Slave, that1.Slave)
@@ -3502,7 +3815,12 @@ func (this *ReregisterSlaveMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ReregisterSlaveMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ReregisterSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3571,7 +3889,12 @@ func (this *SlaveRegisteredMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*SlaveRegisteredMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *SlaveRegisteredMessage")
+		that2, ok := that.(SlaveRegisteredMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SlaveRegisteredMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3579,7 +3902,7 @@ func (this *SlaveRegisteredMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *SlaveRegisteredMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *SlaveRegisteredMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *SlaveRegisteredMessage but is not nil && this == nil")
 	}
 	if !this.SlaveId.Equal(that1.SlaveId) {
 		return fmt.Errorf("SlaveId this(%v) Not Equal that(%v)", this.SlaveId, that1.SlaveId)
@@ -3602,7 +3925,12 @@ func (this *SlaveRegisteredMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*SlaveRegisteredMessage)
 	if !ok {
-		return false
+		that2, ok := that.(SlaveRegisteredMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3633,7 +3961,12 @@ func (this *SlaveReregisteredMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*SlaveReregisteredMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *SlaveReregisteredMessage")
+		that2, ok := that.(SlaveReregisteredMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SlaveReregisteredMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3641,7 +3974,7 @@ func (this *SlaveReregisteredMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *SlaveReregisteredMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *SlaveReregisteredMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *SlaveReregisteredMessage but is not nil && this == nil")
 	}
 	if !this.SlaveId.Equal(that1.SlaveId) {
 		return fmt.Errorf("SlaveId this(%v) Not Equal that(%v)", this.SlaveId, that1.SlaveId)
@@ -3672,7 +4005,12 @@ func (this *SlaveReregisteredMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*SlaveReregisteredMessage)
 	if !ok {
-		return false
+		that2, ok := that.(SlaveReregisteredMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3711,7 +4049,12 @@ func (this *UnregisterSlaveMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*UnregisterSlaveMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *UnregisterSlaveMessage")
+		that2, ok := that.(UnregisterSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *UnregisterSlaveMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3719,7 +4062,7 @@ func (this *UnregisterSlaveMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *UnregisterSlaveMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *UnregisterSlaveMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *UnregisterSlaveMessage but is not nil && this == nil")
 	}
 	if !this.SlaveId.Equal(that1.SlaveId) {
 		return fmt.Errorf("SlaveId this(%v) Not Equal that(%v)", this.SlaveId, that1.SlaveId)
@@ -3739,7 +4082,12 @@ func (this *UnregisterSlaveMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*UnregisterSlaveMessage)
 	if !ok {
-		return false
+		that2, ok := that.(UnregisterSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3767,7 +4115,12 @@ func (this *MasterSlaveConnection) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*MasterSlaveConnection)
 	if !ok {
-		return fmt.Errorf("that is not of type *MasterSlaveConnection")
+		that2, ok := that.(MasterSlaveConnection)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *MasterSlaveConnection")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3775,7 +4128,7 @@ func (this *MasterSlaveConnection) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *MasterSlaveConnection but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *MasterSlaveConnectionbut is not nil && this == nil")
+		return fmt.Errorf("that is type *MasterSlaveConnection but is not nil && this == nil")
 	}
 	if this.TotalPingTimeoutSeconds != nil && that1.TotalPingTimeoutSeconds != nil {
 		if *this.TotalPingTimeoutSeconds != *that1.TotalPingTimeoutSeconds {
@@ -3801,7 +4154,12 @@ func (this *MasterSlaveConnection) Equal(that interface{}) bool {
 
 	that1, ok := that.(*MasterSlaveConnection)
 	if !ok {
-		return false
+		that2, ok := that.(MasterSlaveConnection)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3835,7 +4193,12 @@ func (this *PingSlaveMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*PingSlaveMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *PingSlaveMessage")
+		that2, ok := that.(PingSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *PingSlaveMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3843,7 +4206,7 @@ func (this *PingSlaveMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *PingSlaveMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *PingSlaveMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *PingSlaveMessage but is not nil && this == nil")
 	}
 	if this.Connected != nil && that1.Connected != nil {
 		if *this.Connected != *that1.Connected {
@@ -3869,7 +4232,12 @@ func (this *PingSlaveMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*PingSlaveMessage)
 	if !ok {
-		return false
+		that2, ok := that.(PingSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3903,7 +4271,12 @@ func (this *PongSlaveMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*PongSlaveMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *PongSlaveMessage")
+		that2, ok := that.(PongSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *PongSlaveMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3911,7 +4284,7 @@ func (this *PongSlaveMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *PongSlaveMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *PongSlaveMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *PongSlaveMessage but is not nil && this == nil")
 	}
 	if !bytes.Equal(this.XXX_unrecognized, that1.XXX_unrecognized) {
 		return fmt.Errorf("XXX_unrecognized this(%v) Not Equal that(%v)", this.XXX_unrecognized, that1.XXX_unrecognized)
@@ -3928,7 +4301,12 @@ func (this *PongSlaveMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*PongSlaveMessage)
 	if !ok {
-		return false
+		that2, ok := that.(PongSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3953,7 +4331,12 @@ func (this *ShutdownFrameworkMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ShutdownFrameworkMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ShutdownFrameworkMessage")
+		that2, ok := that.(ShutdownFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ShutdownFrameworkMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -3961,7 +4344,7 @@ func (this *ShutdownFrameworkMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ShutdownFrameworkMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ShutdownFrameworkMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ShutdownFrameworkMessage but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -3981,7 +4364,12 @@ func (this *ShutdownFrameworkMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ShutdownFrameworkMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ShutdownFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4009,7 +4397,12 @@ func (this *ShutdownExecutorMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ShutdownExecutorMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ShutdownExecutorMessage")
+		that2, ok := that.(ShutdownExecutorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ShutdownExecutorMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4017,7 +4410,7 @@ func (this *ShutdownExecutorMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ShutdownExecutorMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ShutdownExecutorMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ShutdownExecutorMessage but is not nil && this == nil")
 	}
 	if !this.ExecutorId.Equal(that1.ExecutorId) {
 		return fmt.Errorf("ExecutorId this(%v) Not Equal that(%v)", this.ExecutorId, that1.ExecutorId)
@@ -4040,7 +4433,12 @@ func (this *ShutdownExecutorMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ShutdownExecutorMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ShutdownExecutorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4071,7 +4469,12 @@ func (this *UpdateFrameworkMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*UpdateFrameworkMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *UpdateFrameworkMessage")
+		that2, ok := that.(UpdateFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *UpdateFrameworkMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4079,7 +4482,7 @@ func (this *UpdateFrameworkMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *UpdateFrameworkMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *UpdateFrameworkMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *UpdateFrameworkMessage but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -4108,7 +4511,12 @@ func (this *UpdateFrameworkMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*UpdateFrameworkMessage)
 	if !ok {
-		return false
+		that2, ok := that.(UpdateFrameworkMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4145,7 +4553,12 @@ func (this *CheckpointResourcesMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*CheckpointResourcesMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *CheckpointResourcesMessage")
+		that2, ok := that.(CheckpointResourcesMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *CheckpointResourcesMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4153,7 +4566,7 @@ func (this *CheckpointResourcesMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *CheckpointResourcesMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *CheckpointResourcesMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *CheckpointResourcesMessage but is not nil && this == nil")
 	}
 	if len(this.Resources) != len(that1.Resources) {
 		return fmt.Errorf("Resources this(%v) Not Equal that(%v)", len(this.Resources), len(that1.Resources))
@@ -4178,7 +4591,12 @@ func (this *CheckpointResourcesMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*CheckpointResourcesMessage)
 	if !ok {
-		return false
+		that2, ok := that.(CheckpointResourcesMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4211,7 +4629,12 @@ func (this *UpdateSlaveMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*UpdateSlaveMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *UpdateSlaveMessage")
+		that2, ok := that.(UpdateSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *UpdateSlaveMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4219,7 +4642,7 @@ func (this *UpdateSlaveMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *UpdateSlaveMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *UpdateSlaveMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *UpdateSlaveMessage but is not nil && this == nil")
 	}
 	if !this.SlaveId.Equal(that1.SlaveId) {
 		return fmt.Errorf("SlaveId this(%v) Not Equal that(%v)", this.SlaveId, that1.SlaveId)
@@ -4247,7 +4670,12 @@ func (this *UpdateSlaveMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*UpdateSlaveMessage)
 	if !ok {
-		return false
+		that2, ok := that.(UpdateSlaveMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4283,7 +4711,12 @@ func (this *RegisterExecutorMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*RegisterExecutorMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *RegisterExecutorMessage")
+		that2, ok := that.(RegisterExecutorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *RegisterExecutorMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4291,7 +4724,7 @@ func (this *RegisterExecutorMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *RegisterExecutorMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *RegisterExecutorMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *RegisterExecutorMessage but is not nil && this == nil")
 	}
 	if !this.FrameworkId.Equal(that1.FrameworkId) {
 		return fmt.Errorf("FrameworkId this(%v) Not Equal that(%v)", this.FrameworkId, that1.FrameworkId)
@@ -4314,7 +4747,12 @@ func (this *RegisterExecutorMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*RegisterExecutorMessage)
 	if !ok {
-		return false
+		that2, ok := that.(RegisterExecutorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4345,7 +4783,12 @@ func (this *ExecutorRegisteredMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ExecutorRegisteredMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ExecutorRegisteredMessage")
+		that2, ok := that.(ExecutorRegisteredMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ExecutorRegisteredMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4353,7 +4796,7 @@ func (this *ExecutorRegisteredMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ExecutorRegisteredMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ExecutorRegisteredMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ExecutorRegisteredMessage but is not nil && this == nil")
 	}
 	if !this.ExecutorInfo.Equal(that1.ExecutorInfo) {
 		return fmt.Errorf("ExecutorInfo this(%v) Not Equal that(%v)", this.ExecutorInfo, that1.ExecutorInfo)
@@ -4385,7 +4828,12 @@ func (this *ExecutorRegisteredMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ExecutorRegisteredMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ExecutorRegisteredMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4425,7 +4873,12 @@ func (this *ExecutorReregisteredMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ExecutorReregisteredMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ExecutorReregisteredMessage")
+		that2, ok := that.(ExecutorReregisteredMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ExecutorReregisteredMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4433,7 +4886,7 @@ func (this *ExecutorReregisteredMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ExecutorReregisteredMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ExecutorReregisteredMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ExecutorReregisteredMessage but is not nil && this == nil")
 	}
 	if !this.SlaveId.Equal(that1.SlaveId) {
 		return fmt.Errorf("SlaveId this(%v) Not Equal that(%v)", this.SlaveId, that1.SlaveId)
@@ -4456,7 +4909,12 @@ func (this *ExecutorReregisteredMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ExecutorReregisteredMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ExecutorReregisteredMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4487,7 +4945,12 @@ func (this *ExitedExecutorMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ExitedExecutorMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ExitedExecutorMessage")
+		that2, ok := that.(ExitedExecutorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ExitedExecutorMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4495,7 +4958,7 @@ func (this *ExitedExecutorMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ExitedExecutorMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ExitedExecutorMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ExitedExecutorMessage but is not nil && this == nil")
 	}
 	if !this.SlaveId.Equal(that1.SlaveId) {
 		return fmt.Errorf("SlaveId this(%v) Not Equal that(%v)", this.SlaveId, that1.SlaveId)
@@ -4530,7 +4993,12 @@ func (this *ExitedExecutorMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ExitedExecutorMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ExitedExecutorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4573,7 +5041,12 @@ func (this *ReconnectExecutorMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ReconnectExecutorMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ReconnectExecutorMessage")
+		that2, ok := that.(ReconnectExecutorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ReconnectExecutorMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4581,7 +5054,7 @@ func (this *ReconnectExecutorMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ReconnectExecutorMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ReconnectExecutorMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ReconnectExecutorMessage but is not nil && this == nil")
 	}
 	if !this.SlaveId.Equal(that1.SlaveId) {
 		return fmt.Errorf("SlaveId this(%v) Not Equal that(%v)", this.SlaveId, that1.SlaveId)
@@ -4601,7 +5074,12 @@ func (this *ReconnectExecutorMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ReconnectExecutorMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ReconnectExecutorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4629,7 +5107,12 @@ func (this *ReregisterExecutorMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ReregisterExecutorMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ReregisterExecutorMessage")
+		that2, ok := that.(ReregisterExecutorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ReregisterExecutorMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4637,7 +5120,7 @@ func (this *ReregisterExecutorMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ReregisterExecutorMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ReregisterExecutorMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ReregisterExecutorMessage but is not nil && this == nil")
 	}
 	if !this.ExecutorId.Equal(that1.ExecutorId) {
 		return fmt.Errorf("ExecutorId this(%v) Not Equal that(%v)", this.ExecutorId, that1.ExecutorId)
@@ -4676,7 +5159,12 @@ func (this *ReregisterExecutorMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ReregisterExecutorMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ReregisterExecutorMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4723,7 +5211,12 @@ func (this *ShutdownMessage) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*ShutdownMessage)
 	if !ok {
-		return fmt.Errorf("that is not of type *ShutdownMessage")
+		that2, ok := that.(ShutdownMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *ShutdownMessage")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4731,7 +5224,7 @@ func (this *ShutdownMessage) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *ShutdownMessage but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *ShutdownMessagebut is not nil && this == nil")
+		return fmt.Errorf("that is type *ShutdownMessage but is not nil && this == nil")
 	}
 	if this.Message != nil && that1.Message != nil {
 		if *this.Message != *that1.Message {
@@ -4757,7 +5250,12 @@ func (this *ShutdownMessage) Equal(that interface{}) bool {
 
 	that1, ok := that.(*ShutdownMessage)
 	if !ok {
-		return false
+		that2, ok := that.(ShutdownMessage)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4791,7 +5289,12 @@ func (this *Archive) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*Archive)
 	if !ok {
-		return fmt.Errorf("that is not of type *Archive")
+		that2, ok := that.(Archive)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *Archive")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4799,7 +5302,7 @@ func (this *Archive) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *Archive but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *Archivebut is not nil && this == nil")
+		return fmt.Errorf("that is type *Archive but is not nil && this == nil")
 	}
 	if len(this.Frameworks) != len(that1.Frameworks) {
 		return fmt.Errorf("Frameworks this(%v) Not Equal that(%v)", len(this.Frameworks), len(that1.Frameworks))
@@ -4824,7 +5327,12 @@ func (this *Archive) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Archive)
 	if !ok {
-		return false
+		that2, ok := that.(Archive)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4857,7 +5365,12 @@ func (this *Archive_Framework) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*Archive_Framework)
 	if !ok {
-		return fmt.Errorf("that is not of type *Archive_Framework")
+		that2, ok := that.(Archive_Framework)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *Archive_Framework")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4865,7 +5378,7 @@ func (this *Archive_Framework) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *Archive_Framework but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *Archive_Frameworkbut is not nil && this == nil")
+		return fmt.Errorf("that is type *Archive_Framework but is not nil && this == nil")
 	}
 	if !this.FrameworkInfo.Equal(that1.FrameworkInfo) {
 		return fmt.Errorf("FrameworkInfo this(%v) Not Equal that(%v)", this.FrameworkInfo, that1.FrameworkInfo)
@@ -4902,7 +5415,12 @@ func (this *Archive_Framework) Equal(that interface{}) bool {
 
 	that1, ok := that.(*Archive_Framework)
 	if !ok {
-		return false
+		that2, ok := that.(Archive_Framework)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4947,7 +5465,12 @@ func (this *TaskHealthStatus) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*TaskHealthStatus)
 	if !ok {
-		return fmt.Errorf("that is not of type *TaskHealthStatus")
+		that2, ok := that.(TaskHealthStatus)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *TaskHealthStatus")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -4955,7 +5478,7 @@ func (this *TaskHealthStatus) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *TaskHealthStatus but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *TaskHealthStatusbut is not nil && this == nil")
+		return fmt.Errorf("that is type *TaskHealthStatus but is not nil && this == nil")
 	}
 	if !this.TaskId.Equal(that1.TaskId) {
 		return fmt.Errorf("TaskId this(%v) Not Equal that(%v)", this.TaskId, that1.TaskId)
@@ -5002,7 +5525,12 @@ func (this *TaskHealthStatus) Equal(that interface{}) bool {
 
 	that1, ok := that.(*TaskHealthStatus)
 	if !ok {
-		return false
+		that2, ok := that.(TaskHealthStatus)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -5057,7 +5585,12 @@ func (this *HookExecuted) VerboseEqual(that interface{}) error {
 
 	that1, ok := that.(*HookExecuted)
 	if !ok {
-		return fmt.Errorf("that is not of type *HookExecuted")
+		that2, ok := that.(HookExecuted)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *HookExecuted")
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -5065,7 +5598,7 @@ func (this *HookExecuted) VerboseEqual(that interface{}) error {
 		}
 		return fmt.Errorf("that is type *HookExecuted but is nil && this != nil")
 	} else if this == nil {
-		return fmt.Errorf("that is type *HookExecutedbut is not nil && this == nil")
+		return fmt.Errorf("that is type *HookExecuted but is not nil && this == nil")
 	}
 	if this.Module != nil && that1.Module != nil {
 		if *this.Module != *that1.Module {
@@ -5091,7 +5624,12 @@ func (this *HookExecuted) Equal(that interface{}) bool {
 
 	that1, ok := that.(*HookExecuted)
 	if !ok {
-		return false
+		that2, ok := that.(HookExecuted)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
 	}
 	if that1 == nil {
 		if this == nil {
@@ -8438,14 +8976,14 @@ func NewPopulatedTask(r randyMessages, easy bool) *Task {
 	v2 := TaskState([]int32{6, 0, 1, 2, 3, 4, 5, 7}[r.Intn(8)])
 	this.State = &v2
 	if r.Intn(10) != 0 {
-		v3 := r.Intn(10)
+		v3 := r.Intn(5)
 		this.Resources = make([]*Resource, v3)
 		for i := 0; i < v3; i++ {
 			this.Resources[i] = NewPopulatedResource(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v4 := r.Intn(10)
+		v4 := r.Intn(5)
 		this.Statuses = make([]*TaskStatus, v4)
 		for i := 0; i < v4; i++ {
 			this.Statuses[i] = NewPopulatedTaskStatus(r, easy)
@@ -8640,7 +9178,7 @@ func NewPopulatedResourceRequestMessage(r randyMessages, easy bool) *ResourceReq
 	this := &ResourceRequestMessage{}
 	this.FrameworkId = NewPopulatedFrameworkID(r, easy)
 	if r.Intn(10) != 0 {
-		v17 := r.Intn(10)
+		v17 := r.Intn(5)
 		this.Requests = make([]*Request, v17)
 		for i := 0; i < v17; i++ {
 			this.Requests[i] = NewPopulatedRequest(r, easy)
@@ -8655,7 +9193,7 @@ func NewPopulatedResourceRequestMessage(r randyMessages, easy bool) *ResourceReq
 func NewPopulatedResourceOffersMessage(r randyMessages, easy bool) *ResourceOffersMessage {
 	this := &ResourceOffersMessage{}
 	if r.Intn(10) != 0 {
-		v18 := r.Intn(10)
+		v18 := r.Intn(5)
 		this.Offers = make([]*Offer, v18)
 		for i := 0; i < v18; i++ {
 			this.Offers[i] = NewPopulatedOffer(r, easy)
@@ -8678,7 +9216,7 @@ func NewPopulatedLaunchTasksMessage(r randyMessages, easy bool) *LaunchTasksMess
 	this := &LaunchTasksMessage{}
 	this.FrameworkId = NewPopulatedFrameworkID(r, easy)
 	if r.Intn(10) != 0 {
-		v20 := r.Intn(10)
+		v20 := r.Intn(5)
 		this.Tasks = make([]*TaskInfo, v20)
 		for i := 0; i < v20; i++ {
 			this.Tasks[i] = NewPopulatedTaskInfo(r, easy)
@@ -8686,7 +9224,7 @@ func NewPopulatedLaunchTasksMessage(r randyMessages, easy bool) *LaunchTasksMess
 	}
 	this.Filters = NewPopulatedFilters(r, easy)
 	if r.Intn(10) != 0 {
-		v21 := r.Intn(10)
+		v21 := r.Intn(5)
 		this.OfferIds = make([]*OfferID, v21)
 		for i := 0; i < v21; i++ {
 			this.OfferIds[i] = NewPopulatedOfferID(r, easy)
@@ -8785,7 +9323,7 @@ func NewPopulatedReconcileTasksMessage(r randyMessages, easy bool) *ReconcileTas
 	this := &ReconcileTasksMessage{}
 	this.FrameworkId = NewPopulatedFrameworkID(r, easy)
 	if r.Intn(10) != 0 {
-		v25 := r.Intn(10)
+		v25 := r.Intn(5)
 		this.Statuses = make([]*TaskStatus, v25)
 		for i := 0; i < v25; i++ {
 			this.Statuses[i] = NewPopulatedTaskStatus(r, easy)
@@ -8815,7 +9353,7 @@ func NewPopulatedRegisterSlaveMessage(r randyMessages, easy bool) *RegisterSlave
 		this.Version = &v27
 	}
 	if r.Intn(10) != 0 {
-		v28 := r.Intn(10)
+		v28 := r.Intn(5)
 		this.CheckpointedResources = make([]*Resource, v28)
 		for i := 0; i < v28; i++ {
 			this.CheckpointedResources[i] = NewPopulatedResource(r, easy)
@@ -8831,21 +9369,21 @@ func NewPopulatedReregisterSlaveMessage(r randyMessages, easy bool) *ReregisterS
 	this := &ReregisterSlaveMessage{}
 	this.Slave = NewPopulatedSlaveInfo(r, easy)
 	if r.Intn(10) != 0 {
-		v29 := r.Intn(10)
+		v29 := r.Intn(5)
 		this.Tasks = make([]*Task, v29)
 		for i := 0; i < v29; i++ {
 			this.Tasks[i] = NewPopulatedTask(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v30 := r.Intn(10)
+		v30 := r.Intn(5)
 		this.ExecutorInfos = make([]*ExecutorInfo, v30)
 		for i := 0; i < v30; i++ {
 			this.ExecutorInfos[i] = NewPopulatedExecutorInfo(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v31 := r.Intn(10)
+		v31 := r.Intn(5)
 		this.CompletedFrameworks = make([]*Archive_Framework, v31)
 		for i := 0; i < v31; i++ {
 			this.CompletedFrameworks[i] = NewPopulatedArchive_Framework(r, easy)
@@ -8856,7 +9394,7 @@ func NewPopulatedReregisterSlaveMessage(r randyMessages, easy bool) *ReregisterS
 		this.Version = &v32
 	}
 	if r.Intn(10) != 0 {
-		v33 := r.Intn(10)
+		v33 := r.Intn(5)
 		this.CheckpointedResources = make([]*Resource, v33)
 		for i := 0; i < v33; i++ {
 			this.CheckpointedResources[i] = NewPopulatedResource(r, easy)
@@ -8884,7 +9422,7 @@ func NewPopulatedSlaveReregisteredMessage(r randyMessages, easy bool) *SlaveRere
 	this := &SlaveReregisteredMessage{}
 	this.SlaveId = NewPopulatedSlaveID(r, easy)
 	if r.Intn(10) != 0 {
-		v34 := r.Intn(10)
+		v34 := r.Intn(5)
 		this.Reconciliations = make([]*ReconcileTasksMessage, v34)
 		for i := 0; i < v34; i++ {
 			this.Reconciliations[i] = NewPopulatedReconcileTasksMessage(r, easy)
@@ -8980,7 +9518,7 @@ func NewPopulatedUpdateFrameworkMessage(r randyMessages, easy bool) *UpdateFrame
 func NewPopulatedCheckpointResourcesMessage(r randyMessages, easy bool) *CheckpointResourcesMessage {
 	this := &CheckpointResourcesMessage{}
 	if r.Intn(10) != 0 {
-		v38 := r.Intn(10)
+		v38 := r.Intn(5)
 		this.Resources = make([]*Resource, v38)
 		for i := 0; i < v38; i++ {
 			this.Resources[i] = NewPopulatedResource(r, easy)
@@ -8996,7 +9534,7 @@ func NewPopulatedUpdateSlaveMessage(r randyMessages, easy bool) *UpdateSlaveMess
 	this := &UpdateSlaveMessage{}
 	this.SlaveId = NewPopulatedSlaveID(r, easy)
 	if r.Intn(10) != 0 {
-		v39 := r.Intn(10)
+		v39 := r.Intn(5)
 		this.OversubscribedResources = make([]*Resource, v39)
 		for i := 0; i < v39; i++ {
 			this.OversubscribedResources[i] = NewPopulatedResource(r, easy)
@@ -9071,14 +9609,14 @@ func NewPopulatedReregisterExecutorMessage(r randyMessages, easy bool) *Reregist
 	this.ExecutorId = NewPopulatedExecutorID(r, easy)
 	this.FrameworkId = NewPopulatedFrameworkID(r, easy)
 	if r.Intn(10) != 0 {
-		v41 := r.Intn(10)
+		v41 := r.Intn(5)
 		this.Tasks = make([]*TaskInfo, v41)
 		for i := 0; i < v41; i++ {
 			this.Tasks[i] = NewPopulatedTaskInfo(r, easy)
 		}
 	}
 	if r.Intn(10) != 0 {
-		v42 := r.Intn(10)
+		v42 := r.Intn(5)
 		this.Updates = make([]*StatusUpdate, v42)
 		for i := 0; i < v42; i++ {
 			this.Updates[i] = NewPopulatedStatusUpdate(r, easy)
@@ -9105,7 +9643,7 @@ func NewPopulatedShutdownMessage(r randyMessages, easy bool) *ShutdownMessage {
 func NewPopulatedArchive(r randyMessages, easy bool) *Archive {
 	this := &Archive{}
 	if r.Intn(10) != 0 {
-		v44 := r.Intn(10)
+		v44 := r.Intn(5)
 		this.Frameworks = make([]*Archive_Framework, v44)
 		for i := 0; i < v44; i++ {
 			this.Frameworks[i] = NewPopulatedArchive_Framework(r, easy)
@@ -9125,7 +9663,7 @@ func NewPopulatedArchive_Framework(r randyMessages, easy bool) *Archive_Framewor
 		this.Pid = &v45
 	}
 	if r.Intn(10) != 0 {
-		v46 := r.Intn(10)
+		v46 := r.Intn(5)
 		this.Tasks = make([]*Task, v46)
 		for i := 0; i < v46; i++ {
 			this.Tasks[i] = NewPopulatedTask(r, easy)
@@ -10827,8 +11365,12 @@ func (m *Task) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -10841,6 +11383,12 @@ func (m *Task) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Task: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Task: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -10848,6 +11396,9 @@ func (m *Task) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -10876,6 +11427,9 @@ func (m *Task) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -10907,6 +11461,9 @@ func (m *Task) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -10938,6 +11495,9 @@ func (m *Task) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -10968,6 +11528,9 @@ func (m *Task) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -10999,6 +11562,9 @@ func (m *Task) Unmarshal(data []byte) error {
 			}
 			var v TaskState
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11017,6 +11583,9 @@ func (m *Task) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11045,6 +11614,9 @@ func (m *Task) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11073,6 +11645,9 @@ func (m *Task) Unmarshal(data []byte) error {
 			}
 			var v TaskState
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11090,6 +11665,9 @@ func (m *Task) Unmarshal(data []byte) error {
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11107,7 +11685,10 @@ func (m *Task) Unmarshal(data []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.StatusUpdateUuid = append([]byte{}, data[iNdEx:postIndex]...)
+			m.StatusUpdateUuid = append(m.StatusUpdateUuid[:0], data[iNdEx:postIndex]...)
+			if m.StatusUpdateUuid == nil {
+				m.StatusUpdateUuid = []byte{}
+			}
 			iNdEx = postIndex
 		case 11:
 			if wireType != 2 {
@@ -11115,6 +11696,9 @@ func (m *Task) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11145,6 +11729,9 @@ func (m *Task) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11170,15 +11757,7 @@ func (m *Task) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -11209,6 +11788,9 @@ func (m *Task) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("state")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *StatusUpdate) Unmarshal(data []byte) error {
@@ -11216,8 +11798,12 @@ func (m *StatusUpdate) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11230,6 +11816,12 @@ func (m *StatusUpdate) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: StatusUpdate: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: StatusUpdate: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -11237,6 +11829,9 @@ func (m *StatusUpdate) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11268,6 +11863,9 @@ func (m *StatusUpdate) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11298,6 +11896,9 @@ func (m *StatusUpdate) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11328,6 +11929,9 @@ func (m *StatusUpdate) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11379,6 +11983,9 @@ func (m *StatusUpdate) Unmarshal(data []byte) error {
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11396,7 +12003,10 @@ func (m *StatusUpdate) Unmarshal(data []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Uuid = append([]byte{}, data[iNdEx:postIndex]...)
+			m.Uuid = append(m.Uuid[:0], data[iNdEx:postIndex]...)
+			if m.Uuid == nil {
+				m.Uuid = []byte{}
+			}
 			iNdEx = postIndex
 		case 7:
 			if wireType != 0 {
@@ -11404,6 +12014,9 @@ func (m *StatusUpdate) Unmarshal(data []byte) error {
 			}
 			var v TaskState
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11416,15 +12029,7 @@ func (m *StatusUpdate) Unmarshal(data []byte) error {
 			}
 			m.LatestState = &v
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -11449,6 +12054,9 @@ func (m *StatusUpdate) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("timestamp")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *StatusUpdateRecord) Unmarshal(data []byte) error {
@@ -11456,8 +12064,12 @@ func (m *StatusUpdateRecord) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11470,6 +12082,12 @@ func (m *StatusUpdateRecord) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: StatusUpdateRecord: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: StatusUpdateRecord: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
@@ -11477,6 +12095,9 @@ func (m *StatusUpdateRecord) Unmarshal(data []byte) error {
 			}
 			var v StatusUpdateRecord_Type
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11495,6 +12116,9 @@ func (m *StatusUpdateRecord) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11525,6 +12149,9 @@ func (m *StatusUpdateRecord) Unmarshal(data []byte) error {
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11542,18 +12169,13 @@ func (m *StatusUpdateRecord) Unmarshal(data []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Uuid = append([]byte{}, data[iNdEx:postIndex]...)
+			m.Uuid = append(m.Uuid[:0], data[iNdEx:postIndex]...)
+			if m.Uuid == nil {
+				m.Uuid = []byte{}
+			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -11572,6 +12194,9 @@ func (m *StatusUpdateRecord) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("type")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *SubmitSchedulerRequest) Unmarshal(data []byte) error {
@@ -11579,8 +12204,12 @@ func (m *SubmitSchedulerRequest) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11593,6 +12222,12 @@ func (m *SubmitSchedulerRequest) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SubmitSchedulerRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SubmitSchedulerRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -11600,6 +12235,9 @@ func (m *SubmitSchedulerRequest) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11623,15 +12261,7 @@ func (m *SubmitSchedulerRequest) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -11650,6 +12280,9 @@ func (m *SubmitSchedulerRequest) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("name")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *SubmitSchedulerResponse) Unmarshal(data []byte) error {
@@ -11657,8 +12290,12 @@ func (m *SubmitSchedulerResponse) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11671,6 +12308,12 @@ func (m *SubmitSchedulerResponse) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SubmitSchedulerResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SubmitSchedulerResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
@@ -11678,6 +12321,9 @@ func (m *SubmitSchedulerResponse) Unmarshal(data []byte) error {
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11692,15 +12338,7 @@ func (m *SubmitSchedulerResponse) Unmarshal(data []byte) error {
 			m.Okay = &b
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -11719,6 +12357,9 @@ func (m *SubmitSchedulerResponse) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("okay")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ExecutorToFrameworkMessage) Unmarshal(data []byte) error {
@@ -11726,8 +12367,12 @@ func (m *ExecutorToFrameworkMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11740,6 +12385,12 @@ func (m *ExecutorToFrameworkMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ExecutorToFrameworkMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ExecutorToFrameworkMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -11747,6 +12398,9 @@ func (m *ExecutorToFrameworkMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11778,6 +12432,9 @@ func (m *ExecutorToFrameworkMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11809,6 +12466,9 @@ func (m *ExecutorToFrameworkMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11840,6 +12500,9 @@ func (m *ExecutorToFrameworkMessage) Unmarshal(data []byte) error {
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11857,19 +12520,14 @@ func (m *ExecutorToFrameworkMessage) Unmarshal(data []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Data = append([]byte{}, data[iNdEx:postIndex]...)
+			m.Data = append(m.Data[:0], data[iNdEx:postIndex]...)
+			if m.Data == nil {
+				m.Data = []byte{}
+			}
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000008)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -11897,6 +12555,9 @@ func (m *ExecutorToFrameworkMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("data")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *FrameworkToExecutorMessage) Unmarshal(data []byte) error {
@@ -11904,8 +12565,12 @@ func (m *FrameworkToExecutorMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -11918,6 +12583,12 @@ func (m *FrameworkToExecutorMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FrameworkToExecutorMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FrameworkToExecutorMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -11925,6 +12596,9 @@ func (m *FrameworkToExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11956,6 +12630,9 @@ func (m *FrameworkToExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -11987,6 +12664,9 @@ func (m *FrameworkToExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12018,6 +12698,9 @@ func (m *FrameworkToExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12035,19 +12718,14 @@ func (m *FrameworkToExecutorMessage) Unmarshal(data []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Data = append([]byte{}, data[iNdEx:postIndex]...)
+			m.Data = append(m.Data[:0], data[iNdEx:postIndex]...)
+			if m.Data == nil {
+				m.Data = []byte{}
+			}
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000008)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -12075,6 +12753,9 @@ func (m *FrameworkToExecutorMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("data")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *RegisterFrameworkMessage) Unmarshal(data []byte) error {
@@ -12082,8 +12763,12 @@ func (m *RegisterFrameworkMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12096,6 +12781,12 @@ func (m *RegisterFrameworkMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RegisterFrameworkMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RegisterFrameworkMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -12103,6 +12794,9 @@ func (m *RegisterFrameworkMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12129,15 +12823,7 @@ func (m *RegisterFrameworkMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -12156,6 +12842,9 @@ func (m *RegisterFrameworkMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("framework")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ReregisterFrameworkMessage) Unmarshal(data []byte) error {
@@ -12163,8 +12852,12 @@ func (m *ReregisterFrameworkMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12177,6 +12870,12 @@ func (m *ReregisterFrameworkMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ReregisterFrameworkMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ReregisterFrameworkMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 2:
 			if wireType != 2 {
@@ -12184,6 +12883,9 @@ func (m *ReregisterFrameworkMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12215,6 +12917,9 @@ func (m *ReregisterFrameworkMessage) Unmarshal(data []byte) error {
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12229,15 +12934,7 @@ func (m *ReregisterFrameworkMessage) Unmarshal(data []byte) error {
 			m.Failover = &b
 			hasFields[0] |= uint64(0x00000002)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -12259,6 +12956,9 @@ func (m *ReregisterFrameworkMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("failover")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *FrameworkRegisteredMessage) Unmarshal(data []byte) error {
@@ -12266,8 +12966,12 @@ func (m *FrameworkRegisteredMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12280,6 +12984,12 @@ func (m *FrameworkRegisteredMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FrameworkRegisteredMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FrameworkRegisteredMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -12287,6 +12997,9 @@ func (m *FrameworkRegisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12318,6 +13031,9 @@ func (m *FrameworkRegisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12344,15 +13060,7 @@ func (m *FrameworkRegisteredMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000002)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -12374,6 +13082,9 @@ func (m *FrameworkRegisteredMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("master_info")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *FrameworkReregisteredMessage) Unmarshal(data []byte) error {
@@ -12381,8 +13092,12 @@ func (m *FrameworkReregisteredMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12395,6 +13110,12 @@ func (m *FrameworkReregisteredMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FrameworkReregisteredMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FrameworkReregisteredMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -12402,6 +13123,9 @@ func (m *FrameworkReregisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12433,6 +13157,9 @@ func (m *FrameworkReregisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12459,15 +13186,7 @@ func (m *FrameworkReregisteredMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000002)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -12489,6 +13208,9 @@ func (m *FrameworkReregisteredMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("master_info")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *UnregisterFrameworkMessage) Unmarshal(data []byte) error {
@@ -12496,8 +13218,12 @@ func (m *UnregisterFrameworkMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12510,6 +13236,12 @@ func (m *UnregisterFrameworkMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UnregisterFrameworkMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UnregisterFrameworkMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -12517,6 +13249,9 @@ func (m *UnregisterFrameworkMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12543,15 +13278,7 @@ func (m *UnregisterFrameworkMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -12570,6 +13297,9 @@ func (m *UnregisterFrameworkMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("framework_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *DeactivateFrameworkMessage) Unmarshal(data []byte) error {
@@ -12577,8 +13307,12 @@ func (m *DeactivateFrameworkMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12591,6 +13325,12 @@ func (m *DeactivateFrameworkMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DeactivateFrameworkMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DeactivateFrameworkMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -12598,6 +13338,9 @@ func (m *DeactivateFrameworkMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12624,15 +13367,7 @@ func (m *DeactivateFrameworkMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -12651,6 +13386,9 @@ func (m *DeactivateFrameworkMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("framework_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ResourceRequestMessage) Unmarshal(data []byte) error {
@@ -12658,8 +13396,12 @@ func (m *ResourceRequestMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12672,6 +13414,12 @@ func (m *ResourceRequestMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ResourceRequestMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ResourceRequestMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -12679,6 +13427,9 @@ func (m *ResourceRequestMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12710,6 +13461,9 @@ func (m *ResourceRequestMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12733,15 +13487,7 @@ func (m *ResourceRequestMessage) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -12760,14 +13506,21 @@ func (m *ResourceRequestMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("framework_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ResourceOffersMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12780,6 +13533,12 @@ func (m *ResourceOffersMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ResourceOffersMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ResourceOffersMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -12787,6 +13546,9 @@ func (m *ResourceOffersMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12815,6 +13577,9 @@ func (m *ResourceOffersMessage) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12836,15 +13601,7 @@ func (m *ResourceOffersMessage) Unmarshal(data []byte) error {
 			m.Pids = append(m.Pids, string(data[iNdEx:postIndex]))
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -12860,6 +13617,9 @@ func (m *ResourceOffersMessage) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *LaunchTasksMessage) Unmarshal(data []byte) error {
@@ -12867,8 +13627,12 @@ func (m *LaunchTasksMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -12881,6 +13645,12 @@ func (m *LaunchTasksMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: LaunchTasksMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: LaunchTasksMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -12888,6 +13658,9 @@ func (m *LaunchTasksMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12919,6 +13692,9 @@ func (m *LaunchTasksMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12947,6 +13723,9 @@ func (m *LaunchTasksMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -12978,6 +13757,9 @@ func (m *LaunchTasksMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13001,15 +13783,7 @@ func (m *LaunchTasksMessage) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -13031,6 +13805,9 @@ func (m *LaunchTasksMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("filters")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *RescindResourceOfferMessage) Unmarshal(data []byte) error {
@@ -13038,8 +13815,12 @@ func (m *RescindResourceOfferMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13052,6 +13833,12 @@ func (m *RescindResourceOfferMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RescindResourceOfferMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RescindResourceOfferMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -13059,6 +13846,9 @@ func (m *RescindResourceOfferMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13085,15 +13875,7 @@ func (m *RescindResourceOfferMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -13112,6 +13894,9 @@ func (m *RescindResourceOfferMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("offer_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ReviveOffersMessage) Unmarshal(data []byte) error {
@@ -13119,8 +13904,12 @@ func (m *ReviveOffersMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13133,6 +13922,12 @@ func (m *ReviveOffersMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ReviveOffersMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ReviveOffersMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -13140,6 +13935,9 @@ func (m *ReviveOffersMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13166,15 +13964,7 @@ func (m *ReviveOffersMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -13193,6 +13983,9 @@ func (m *ReviveOffersMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("framework_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *RunTaskMessage) Unmarshal(data []byte) error {
@@ -13200,8 +13993,12 @@ func (m *RunTaskMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13214,6 +14011,12 @@ func (m *RunTaskMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RunTaskMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RunTaskMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -13221,6 +14024,9 @@ func (m *RunTaskMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13251,6 +14057,9 @@ func (m *RunTaskMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13282,6 +14091,9 @@ func (m *RunTaskMessage) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13309,6 +14121,9 @@ func (m *RunTaskMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13335,15 +14150,7 @@ func (m *RunTaskMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000002)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -13365,6 +14172,9 @@ func (m *RunTaskMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("task")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *KillTaskMessage) Unmarshal(data []byte) error {
@@ -13372,8 +14182,12 @@ func (m *KillTaskMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13386,6 +14200,12 @@ func (m *KillTaskMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: KillTaskMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: KillTaskMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -13393,6 +14213,9 @@ func (m *KillTaskMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13424,6 +14247,9 @@ func (m *KillTaskMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13450,15 +14276,7 @@ func (m *KillTaskMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000002)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -13480,6 +14298,9 @@ func (m *KillTaskMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("task_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *StatusUpdateMessage) Unmarshal(data []byte) error {
@@ -13487,8 +14308,12 @@ func (m *StatusUpdateMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13501,6 +14326,12 @@ func (m *StatusUpdateMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: StatusUpdateMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: StatusUpdateMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -13508,6 +14339,9 @@ func (m *StatusUpdateMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13539,6 +14373,9 @@ func (m *StatusUpdateMessage) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13561,15 +14398,7 @@ func (m *StatusUpdateMessage) Unmarshal(data []byte) error {
 			m.Pid = &s
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -13588,6 +14417,9 @@ func (m *StatusUpdateMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("update")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *StatusUpdateAcknowledgementMessage) Unmarshal(data []byte) error {
@@ -13595,8 +14427,12 @@ func (m *StatusUpdateAcknowledgementMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13609,6 +14445,12 @@ func (m *StatusUpdateAcknowledgementMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: StatusUpdateAcknowledgementMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: StatusUpdateAcknowledgementMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -13616,6 +14458,9 @@ func (m *StatusUpdateAcknowledgementMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13647,6 +14492,9 @@ func (m *StatusUpdateAcknowledgementMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13678,6 +14526,9 @@ func (m *StatusUpdateAcknowledgementMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13709,6 +14560,9 @@ func (m *StatusUpdateAcknowledgementMessage) Unmarshal(data []byte) error {
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13726,19 +14580,14 @@ func (m *StatusUpdateAcknowledgementMessage) Unmarshal(data []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Uuid = append([]byte{}, data[iNdEx:postIndex]...)
+			m.Uuid = append(m.Uuid[:0], data[iNdEx:postIndex]...)
+			if m.Uuid == nil {
+				m.Uuid = []byte{}
+			}
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000008)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -13766,6 +14615,9 @@ func (m *StatusUpdateAcknowledgementMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("uuid")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *LostSlaveMessage) Unmarshal(data []byte) error {
@@ -13773,8 +14625,12 @@ func (m *LostSlaveMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13787,6 +14643,12 @@ func (m *LostSlaveMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: LostSlaveMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: LostSlaveMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -13794,6 +14656,9 @@ func (m *LostSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13820,15 +14685,7 @@ func (m *LostSlaveMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -13847,6 +14704,9 @@ func (m *LostSlaveMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("slave_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ReconcileTasksMessage) Unmarshal(data []byte) error {
@@ -13854,8 +14714,12 @@ func (m *ReconcileTasksMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13868,6 +14732,12 @@ func (m *ReconcileTasksMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ReconcileTasksMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ReconcileTasksMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -13875,6 +14745,9 @@ func (m *ReconcileTasksMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13906,6 +14779,9 @@ func (m *ReconcileTasksMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -13929,15 +14805,7 @@ func (m *ReconcileTasksMessage) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -13956,6 +14824,9 @@ func (m *ReconcileTasksMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("framework_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *FrameworkErrorMessage) Unmarshal(data []byte) error {
@@ -13963,8 +14834,12 @@ func (m *FrameworkErrorMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -13977,6 +14852,12 @@ func (m *FrameworkErrorMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FrameworkErrorMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FrameworkErrorMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 2:
 			if wireType != 2 {
@@ -13984,6 +14865,9 @@ func (m *FrameworkErrorMessage) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14007,15 +14891,7 @@ func (m *FrameworkErrorMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -14034,6 +14910,9 @@ func (m *FrameworkErrorMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("message")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *RegisterSlaveMessage) Unmarshal(data []byte) error {
@@ -14041,8 +14920,12 @@ func (m *RegisterSlaveMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14055,6 +14938,12 @@ func (m *RegisterSlaveMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RegisterSlaveMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RegisterSlaveMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -14062,6 +14951,9 @@ func (m *RegisterSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14093,6 +14985,9 @@ func (m *RegisterSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14120,6 +15015,9 @@ func (m *RegisterSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14143,15 +15041,7 @@ func (m *RegisterSlaveMessage) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -14170,6 +15060,9 @@ func (m *RegisterSlaveMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("slave")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ReregisterSlaveMessage) Unmarshal(data []byte) error {
@@ -14177,8 +15070,12 @@ func (m *ReregisterSlaveMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14191,6 +15088,12 @@ func (m *ReregisterSlaveMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ReregisterSlaveMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ReregisterSlaveMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 2:
 			if wireType != 2 {
@@ -14198,6 +15101,9 @@ func (m *ReregisterSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14229,6 +15135,9 @@ func (m *ReregisterSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14257,6 +15166,9 @@ func (m *ReregisterSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14285,6 +15197,9 @@ func (m *ReregisterSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14313,6 +15228,9 @@ func (m *ReregisterSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14340,6 +15258,9 @@ func (m *ReregisterSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14363,15 +15284,7 @@ func (m *ReregisterSlaveMessage) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -14390,6 +15303,9 @@ func (m *ReregisterSlaveMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("slave")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *SlaveRegisteredMessage) Unmarshal(data []byte) error {
@@ -14397,8 +15313,12 @@ func (m *SlaveRegisteredMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14411,6 +15331,12 @@ func (m *SlaveRegisteredMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SlaveRegisteredMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SlaveRegisteredMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -14418,6 +15344,9 @@ func (m *SlaveRegisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14449,6 +15378,9 @@ func (m *SlaveRegisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14474,15 +15406,7 @@ func (m *SlaveRegisteredMessage) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -14501,6 +15425,9 @@ func (m *SlaveRegisteredMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("slave_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *SlaveReregisteredMessage) Unmarshal(data []byte) error {
@@ -14508,8 +15435,12 @@ func (m *SlaveReregisteredMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14522,6 +15453,12 @@ func (m *SlaveReregisteredMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SlaveReregisteredMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SlaveReregisteredMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -14529,6 +15466,9 @@ func (m *SlaveReregisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14560,6 +15500,9 @@ func (m *SlaveReregisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14588,6 +15531,9 @@ func (m *SlaveReregisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14613,15 +15559,7 @@ func (m *SlaveReregisteredMessage) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -14640,6 +15578,9 @@ func (m *SlaveReregisteredMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("slave_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *UnregisterSlaveMessage) Unmarshal(data []byte) error {
@@ -14647,8 +15588,12 @@ func (m *UnregisterSlaveMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14661,6 +15606,12 @@ func (m *UnregisterSlaveMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UnregisterSlaveMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UnregisterSlaveMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -14668,6 +15619,9 @@ func (m *UnregisterSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14694,15 +15648,7 @@ func (m *UnregisterSlaveMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -14721,14 +15667,21 @@ func (m *UnregisterSlaveMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("slave_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *MasterSlaveConnection) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14741,6 +15694,12 @@ func (m *MasterSlaveConnection) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MasterSlaveConnection: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MasterSlaveConnection: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 1 {
@@ -14762,15 +15721,7 @@ func (m *MasterSlaveConnection) Unmarshal(data []byte) error {
 			v2 := float64(math.Float64frombits(v))
 			m.TotalPingTimeoutSeconds = &v2
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -14786,6 +15737,9 @@ func (m *MasterSlaveConnection) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *PingSlaveMessage) Unmarshal(data []byte) error {
@@ -14793,8 +15747,12 @@ func (m *PingSlaveMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14807,6 +15765,12 @@ func (m *PingSlaveMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PingSlaveMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PingSlaveMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
@@ -14814,6 +15778,9 @@ func (m *PingSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14828,15 +15795,7 @@ func (m *PingSlaveMessage) Unmarshal(data []byte) error {
 			m.Connected = &b
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -14855,14 +15814,21 @@ func (m *PingSlaveMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("connected")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *PongSlaveMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14874,17 +15840,16 @@ func (m *PongSlaveMessage) Unmarshal(data []byte) error {
 			}
 		}
 		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PongSlaveMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PongSlaveMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -14900,6 +15865,9 @@ func (m *PongSlaveMessage) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ShutdownFrameworkMessage) Unmarshal(data []byte) error {
@@ -14907,8 +15875,12 @@ func (m *ShutdownFrameworkMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -14921,6 +15893,12 @@ func (m *ShutdownFrameworkMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ShutdownFrameworkMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ShutdownFrameworkMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -14928,6 +15906,9 @@ func (m *ShutdownFrameworkMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -14954,15 +15935,7 @@ func (m *ShutdownFrameworkMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -14981,14 +15954,21 @@ func (m *ShutdownFrameworkMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("framework_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ShutdownExecutorMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15001,6 +15981,12 @@ func (m *ShutdownExecutorMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ShutdownExecutorMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ShutdownExecutorMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -15008,6 +15994,9 @@ func (m *ShutdownExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15038,6 +16027,9 @@ func (m *ShutdownExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15063,15 +16055,7 @@ func (m *ShutdownExecutorMessage) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -15087,6 +16071,9 @@ func (m *ShutdownExecutorMessage) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *UpdateFrameworkMessage) Unmarshal(data []byte) error {
@@ -15094,8 +16081,12 @@ func (m *UpdateFrameworkMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15108,6 +16099,12 @@ func (m *UpdateFrameworkMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdateFrameworkMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdateFrameworkMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -15115,6 +16112,9 @@ func (m *UpdateFrameworkMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15146,6 +16146,9 @@ func (m *UpdateFrameworkMessage) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15168,15 +16171,7 @@ func (m *UpdateFrameworkMessage) Unmarshal(data []byte) error {
 			m.Pid = &s
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -15195,14 +16190,21 @@ func (m *UpdateFrameworkMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("framework_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *CheckpointResourcesMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15215,6 +16217,12 @@ func (m *CheckpointResourcesMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CheckpointResourcesMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CheckpointResourcesMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -15222,6 +16230,9 @@ func (m *CheckpointResourcesMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15245,15 +16256,7 @@ func (m *CheckpointResourcesMessage) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -15269,6 +16272,9 @@ func (m *CheckpointResourcesMessage) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *UpdateSlaveMessage) Unmarshal(data []byte) error {
@@ -15276,8 +16282,12 @@ func (m *UpdateSlaveMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15290,6 +16300,12 @@ func (m *UpdateSlaveMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdateSlaveMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdateSlaveMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -15297,6 +16313,9 @@ func (m *UpdateSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15328,6 +16347,9 @@ func (m *UpdateSlaveMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15351,15 +16373,7 @@ func (m *UpdateSlaveMessage) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -15378,6 +16392,9 @@ func (m *UpdateSlaveMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("slave_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *RegisterExecutorMessage) Unmarshal(data []byte) error {
@@ -15385,8 +16402,12 @@ func (m *RegisterExecutorMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15399,6 +16420,12 @@ func (m *RegisterExecutorMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RegisterExecutorMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RegisterExecutorMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -15406,6 +16433,9 @@ func (m *RegisterExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15437,6 +16467,9 @@ func (m *RegisterExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15463,15 +16496,7 @@ func (m *RegisterExecutorMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000002)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -15493,6 +16518,9 @@ func (m *RegisterExecutorMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("executor_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ExecutorRegisteredMessage) Unmarshal(data []byte) error {
@@ -15500,8 +16528,12 @@ func (m *ExecutorRegisteredMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15514,6 +16546,12 @@ func (m *ExecutorRegisteredMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ExecutorRegisteredMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ExecutorRegisteredMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 2:
 			if wireType != 2 {
@@ -15521,6 +16559,9 @@ func (m *ExecutorRegisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15552,6 +16593,9 @@ func (m *ExecutorRegisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15583,6 +16627,9 @@ func (m *ExecutorRegisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15614,6 +16661,9 @@ func (m *ExecutorRegisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15645,6 +16695,9 @@ func (m *ExecutorRegisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15671,15 +16724,7 @@ func (m *ExecutorRegisteredMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000010)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -15710,6 +16755,9 @@ func (m *ExecutorRegisteredMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("slave_info")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ExecutorReregisteredMessage) Unmarshal(data []byte) error {
@@ -15717,8 +16765,12 @@ func (m *ExecutorReregisteredMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15731,6 +16783,12 @@ func (m *ExecutorReregisteredMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ExecutorReregisteredMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ExecutorReregisteredMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -15738,6 +16796,9 @@ func (m *ExecutorReregisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15769,6 +16830,9 @@ func (m *ExecutorReregisteredMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15795,15 +16859,7 @@ func (m *ExecutorReregisteredMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000002)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -15825,6 +16881,9 @@ func (m *ExecutorReregisteredMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("slave_info")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ExitedExecutorMessage) Unmarshal(data []byte) error {
@@ -15832,8 +16891,12 @@ func (m *ExitedExecutorMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -15846,6 +16909,12 @@ func (m *ExitedExecutorMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ExitedExecutorMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ExitedExecutorMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -15853,6 +16922,9 @@ func (m *ExitedExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15884,6 +16956,9 @@ func (m *ExitedExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15915,6 +16990,9 @@ func (m *ExitedExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15946,6 +17024,9 @@ func (m *ExitedExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -15959,15 +17040,7 @@ func (m *ExitedExecutorMessage) Unmarshal(data []byte) error {
 			m.Status = &v
 			hasFields[0] |= uint64(0x00000008)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -15995,6 +17068,9 @@ func (m *ExitedExecutorMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("status")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ReconnectExecutorMessage) Unmarshal(data []byte) error {
@@ -16002,8 +17078,12 @@ func (m *ReconnectExecutorMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -16016,6 +17096,12 @@ func (m *ReconnectExecutorMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ReconnectExecutorMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ReconnectExecutorMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -16023,6 +17109,9 @@ func (m *ReconnectExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16049,15 +17138,7 @@ func (m *ReconnectExecutorMessage) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 			hasFields[0] |= uint64(0x00000001)
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -16076,6 +17157,9 @@ func (m *ReconnectExecutorMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("slave_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ReregisterExecutorMessage) Unmarshal(data []byte) error {
@@ -16083,8 +17167,12 @@ func (m *ReregisterExecutorMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -16097,6 +17185,12 @@ func (m *ReregisterExecutorMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ReregisterExecutorMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ReregisterExecutorMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -16104,6 +17198,9 @@ func (m *ReregisterExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16135,6 +17232,9 @@ func (m *ReregisterExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16166,6 +17266,9 @@ func (m *ReregisterExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16194,6 +17297,9 @@ func (m *ReregisterExecutorMessage) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16217,15 +17323,7 @@ func (m *ReregisterExecutorMessage) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -16247,14 +17345,21 @@ func (m *ReregisterExecutorMessage) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("framework_id")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *ShutdownMessage) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -16267,6 +17372,12 @@ func (m *ShutdownMessage) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ShutdownMessage: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ShutdownMessage: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -16274,6 +17385,9 @@ func (m *ShutdownMessage) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16296,15 +17410,7 @@ func (m *ShutdownMessage) Unmarshal(data []byte) error {
 			m.Message = &s
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -16320,14 +17426,21 @@ func (m *ShutdownMessage) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *Archive) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -16340,6 +17453,12 @@ func (m *Archive) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Archive: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Archive: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -16347,6 +17466,9 @@ func (m *Archive) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16370,15 +17492,7 @@ func (m *Archive) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -16394,6 +17508,9 @@ func (m *Archive) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *Archive_Framework) Unmarshal(data []byte) error {
@@ -16401,8 +17518,12 @@ func (m *Archive_Framework) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -16415,6 +17536,12 @@ func (m *Archive_Framework) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Framework: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Framework: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -16422,6 +17549,9 @@ func (m *Archive_Framework) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16453,6 +17583,9 @@ func (m *Archive_Framework) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16480,6 +17613,9 @@ func (m *Archive_Framework) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16503,15 +17639,7 @@ func (m *Archive_Framework) Unmarshal(data []byte) error {
 			}
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -16530,6 +17658,9 @@ func (m *Archive_Framework) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("framework_info")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *TaskHealthStatus) Unmarshal(data []byte) error {
@@ -16537,8 +17668,12 @@ func (m *TaskHealthStatus) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -16551,6 +17686,12 @@ func (m *TaskHealthStatus) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TaskHealthStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TaskHealthStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -16558,6 +17699,9 @@ func (m *TaskHealthStatus) Unmarshal(data []byte) error {
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16589,6 +17733,9 @@ func (m *TaskHealthStatus) Unmarshal(data []byte) error {
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16608,6 +17755,9 @@ func (m *TaskHealthStatus) Unmarshal(data []byte) error {
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16626,6 +17776,9 @@ func (m *TaskHealthStatus) Unmarshal(data []byte) error {
 			}
 			var v int32
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16638,15 +17791,7 @@ func (m *TaskHealthStatus) Unmarshal(data []byte) error {
 			}
 			m.ConsecutiveFailures = &v
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -16668,14 +17813,21 @@ func (m *TaskHealthStatus) Unmarshal(data []byte) error {
 		return github_com_gogo_protobuf_proto.NewRequiredNotSetError("healthy")
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func (m *HookExecuted) Unmarshal(data []byte) error {
 	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
+		preIndex := iNdEx
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
@@ -16688,6 +17840,12 @@ func (m *HookExecuted) Unmarshal(data []byte) error {
 		}
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: HookExecuted: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: HookExecuted: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
@@ -16695,6 +17853,9 @@ func (m *HookExecuted) Unmarshal(data []byte) error {
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
@@ -16717,15 +17878,7 @@ func (m *HookExecuted) Unmarshal(data []byte) error {
 			m.Module = &s
 			iNdEx = postIndex
 		default:
-			var sizeOfWire int
-			for {
-				sizeOfWire++
-				wire >>= 7
-				if wire == 0 {
-					break
-				}
-			}
-			iNdEx -= sizeOfWire
+			iNdEx = preIndex
 			skippy, err := skipMessages(data[iNdEx:])
 			if err != nil {
 				return err
@@ -16741,6 +17894,9 @@ func (m *HookExecuted) Unmarshal(data []byte) error {
 		}
 	}
 
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
 	return nil
 }
 func skipMessages(data []byte) (n int, err error) {
@@ -16749,6 +17905,9 @@ func skipMessages(data []byte) (n int, err error) {
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return 0, ErrIntOverflowMessages
+			}
 			if iNdEx >= l {
 				return 0, io.ErrUnexpectedEOF
 			}
@@ -16762,7 +17921,10 @@ func skipMessages(data []byte) (n int, err error) {
 		wireType := int(wire & 0x7)
 		switch wireType {
 		case 0:
-			for {
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return 0, io.ErrUnexpectedEOF
 				}
@@ -16778,6 +17940,9 @@ func skipMessages(data []byte) (n int, err error) {
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowMessages
+				}
 				if iNdEx >= l {
 					return 0, io.ErrUnexpectedEOF
 				}
@@ -16798,6 +17963,9 @@ func skipMessages(data []byte) (n int, err error) {
 				var innerWire uint64
 				var start int = iNdEx
 				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return 0, ErrIntOverflowMessages
+					}
 					if iNdEx >= l {
 						return 0, io.ErrUnexpectedEOF
 					}
@@ -16833,4 +18001,5 @@ func skipMessages(data []byte) (n int, err error) {
 
 var (
 	ErrInvalidLengthMessages = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowMessages   = fmt.Errorf("proto: integer overflow")
 )
